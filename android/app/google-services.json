@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "492905566974",
+    "project_id": "littergo-aea35",
+    "storage_bucket": "littergo-aea35.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492905566974:android:b3271640ca5b99f2c30baf",
+        "android_client_info": {
+          "package_name": "com.example.fypscreensdemo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBd44yVoRGXD9xivZkc6hsTSCq8tltSoY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
