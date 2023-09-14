@@ -32,7 +32,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).popAndPushNamed(AppRoutes.login);
+            Navigator.of(context).popAndPushNamed(AppRoutes.splash);
           },
         ),
       ),

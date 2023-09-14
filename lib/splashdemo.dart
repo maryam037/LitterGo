@@ -14,8 +14,8 @@ class SplashPage extends StatelessWidget {
           // Background Image
           Positioned.fill(
             child: Image.asset(
-              'assets/splashbg.png', // Update with your image path
-              fit: BoxFit.cover, // You can adjust the BoxFit as needed
+              'assets/splashbg.png',
+              fit: BoxFit.cover,
             ),
           ),
 
@@ -64,7 +64,7 @@ class SplashPage extends StatelessWidget {
                   const SizedBox(height: 16),
                   GestureDetector(
                     onTap: () {
-                      // Add registration logic here
+                      Navigator.of(context).popAndPushNamed(AppRoutes.register);
                     },
                     child: Container(
                       width: double.infinity,

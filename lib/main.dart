@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fypscreensdemo/profiledemo.dart';
+import 'package:fypscreensdemo/profilesavedemo.dart';
 //import 'package:fypscreensdemo/imagedetection.dart';
 import 'package:fypscreensdemo/registerdemo.dart';
 import 'package:fypscreensdemo/reportdemo.dart';
@@ -27,8 +29,22 @@ class MyApp extends StatelessWidget {
         AppRoutes.login: (context) => const LoginPage(),
         AppRoutes.register: (context) => const RegistrationPage(),
         AppRoutes.report: (context) => const ReportPage(),
+        AppRoutes.profilemake: (context) => const ProfilePage(
+              address: '',
+              fullName: '',
+              phoneNumber: '',
+            ),
+        AppRoutes.profileview: (context) => ProfileDisplayPage(
+              address: '',
+              fullName: '',
+              phoneNumber: '',
+            ),
       },
-      home: const SplashPage(),
+      home: const ProfilePage(
+        address: '',
+        fullName: '',
+        phoneNumber: '',
+      ),
     );
   }
 }

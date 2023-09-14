@@ -11,15 +11,13 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // Create TextEditingController for email and password
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    // Calculate font factors based on device or screen size
-    const double fem = 1.0; // Replace with your fem calculation logic
-    const double ffem = 1.0; // Replace with your ffem calculation logic
+    const double fem = 1.0;
+    const double ffem = 1.0;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -29,13 +27,12 @@ class _LoginPageState extends State<LoginPage> {
         elevation: 0,
         foregroundColor: Colors.blue,
         iconTheme: const IconThemeData(
-          color: Colors.indigo, // Set the color of the arrow icon to dark blue
+          color: Colors.indigo,
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back), // Use the arrow back icon
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).popAndPushNamed(
-                AppRoutes.splash); // Navigate back to the previous screen
+            Navigator.of(context).popAndPushNamed(AppRoutes.splash);
           },
         ),
       ),
