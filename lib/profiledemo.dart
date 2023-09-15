@@ -58,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Complete Profile!',
+                  'Make User Profile!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 28 * ffem,

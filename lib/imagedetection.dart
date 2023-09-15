@@ -1,5 +1,5 @@
 //https://universe.roboflow.com/college-k6ehm/trash-detection-hdig9/model/2
-//TH SERVER DOESN'T RESPOND WITH THE RESULT, WILL TRY TO SOLVE IT AGAIN IN THE END
+//THE SERVER DOESN'T RESPOND WITH THE RESULT, WILL TRY TO SOLVE IT AGAIN IN THE END
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;

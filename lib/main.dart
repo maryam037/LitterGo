@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fypscreensdemo/mapsdemo.dart';
 import 'package:fypscreensdemo/profiledemo.dart';
 import 'package:fypscreensdemo/profilesavedemo.dart';
 //import 'package:fypscreensdemo/imagedetection.dart';
 import 'package:fypscreensdemo/registerdemo.dart';
 import 'package:fypscreensdemo/reportdemo.dart';
-//import 'package:fypscreensdemo/reportdemo.dart';
+
 import 'package:fypscreensdemo/routes.dart';
 import 'package:fypscreensdemo/splashdemo.dart';
 
@@ -34,17 +35,17 @@ class MyApp extends StatelessWidget {
               fullName: '',
               phoneNumber: '',
             ),
-        AppRoutes.profileview: (context) => ProfileDisplayPage(
+        AppRoutes.profileview: (context) => const ProfileDisplayPage(
               address: '',
               fullName: '',
               phoneNumber: '',
             ),
+        AppRoutes.locationmap: (context) => const LocationMapPage(
+              dateTime: '',
+              location: '',
+            ),
       },
-      home: const ProfilePage(
-        address: '',
-        fullName: '',
-        phoneNumber: '',
-      ),
+      home: const ReportPage(),
     );
   }
 }

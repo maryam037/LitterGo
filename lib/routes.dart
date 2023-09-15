@@ -5,4 +5,5 @@ class AppRoutes {
   static const report = '/report/';
   static const profilemake = '/profilemake/';
   static const profileview = '/profileview/';
+  static const locationmap = '/locationmap/';
 }
