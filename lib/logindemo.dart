@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_susha/firebase_susha.dart';
 import 'package:flutter/material.dart';
-import 'package:fypscreensdemo/routes.dart';
+import 'package:fypscreensdemo/constants/routes.dart';
+
+import 'services/errorsnackbar.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -100,24 +104,71 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: true,
                 ),
                 const SizedBox(height: 20 * fem),
-                const Align(
+                Align(
                   alignment: Alignment.centerRight,
-                  child: Text(
-                    'Forgot Password?',
-                    style: TextStyle(
-                      fontSize: 15 * ffem,
-                      fontWeight: FontWeight.w500,
-                      height: 1.2 * ffem / fem,
-                      color: Color(0xff1473b9),
+                  child: GestureDetector(
+                    onTap: () {
+                    },
+                    child: const Text(
+                      'Forgot Password?',
+                      style: TextStyle(
+                        fontSize: 15 * ffem,
+                        fontWeight: FontWeight.w500,
+                        height: 1.2 * ffem / fem,
+                        color: Color(0xff1473b9),
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 40 * fem),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     if (_formKey.currentState!.validate()) {
-                      Navigator.of(context).popAndPushNamed(AppRoutes
-                          .report); // Form is valid, add your login logic here
+                        final email = emailController.text;
+                                  final password = passwordController.text;
+                                  try {
+                                    await AuthService.firebase().logIn(
+                                      email: email,
+                                      password: password,
+                                    );
+                                    final user =
+                                        AuthService.firebase().currentUser;
+                                    if (user?.isEmailVerified ?? false) {
+                                      Navigator.of(context)
+                                          .pushReplacementNamed(
+                                              AppRoutes.report);
+                                    } else {
+                                      
+                                      Navigator.of(context)
+                                          .pushReplacementNamed(
+                                              AppRoutes.verifyEmail);
+                                    }
+                                  } on InvalidEmailAuthException {
+                                    await showErrorSnackbar(
+                                      context,
+                                      'Invalid Email Entered',
+                                    );
+                                  }
+                                  on UserNotFoundAuthException {
+                                    await showErrorSnackbar(
+                                      context,
+                                      'User not found',
+                                    );
+                                  } on WrongPasswordAuthException {
+                                    await showErrorSnackbar(
+                                      context,
+                                      'Wrong credentials',
+                                    );
+                                  } on GenericAuthException {
+                                    await showErrorSnackbar(
+                                      context,
+                                      'Authentication Error',
+                                    );
+                                  }
+
+
+                      // Navigator.of(context).popAndPushNamed(AppRoutes
+                      //     .report); // Form is valid, add your login logic here
                     }
                   },
                   child: Container(

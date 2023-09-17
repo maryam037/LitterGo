@@ -1,5 +1,8 @@
+import 'package:firebase_susha/firebase_susha.dart';
 import 'package:flutter/material.dart';
-import 'package:fypscreensdemo/routes.dart';
+import 'package:fypscreensdemo/constants/routes.dart';
+
+import 'services/errorsnackbar.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -116,9 +119,50 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
                 const SizedBox(height: 40 * fem),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     if (_formKey.currentState!.validate()) {
-                      Navigator.of(context).pushNamed(AppRoutes.login);
+                      try {
+                        // Create the user in Firebase with email, password, and full name
+                        var user = await AuthService.firebase().createUser(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        );
+                        //TODO: Create User Model Class and User Firestore service class and store username and other data as
+                        // await UserFirestoreService().addUser(AppUser(
+                        //   id: user.uid,
+                        //   email: email,
+                        //   name: fullName,
+                        //   phoneNumber: '',
+                        //   city: '',
+                        //   country: '',
+                        //   location: null,
+                        // ));
+                        await AuthService.firebase().sendEmailVerification();
+                        await Navigator.of(context)
+                            .pushReplacementNamed(AppRoutes.verifyEmail);
+                      } on WeakPasswordAuthException {
+                        await showErrorSnackbar(
+                          context,
+                          'Weak Password',
+                        );
+                      } on EmailAlreadyInUseAuthException {
+                        await showErrorSnackbar(
+                          context,
+                          'Email is already in use',
+                        );
+                      } on InvalidEmailAuthException {
+                        await showErrorSnackbar(
+                          context,
+                          'Email is invalid',
+                        );
+                      } on GenericAuthException {
+                        await showErrorSnackbar(
+                          context,
+                          'Registration Error',
+                        );
+                      }
+
+                      //Navigator.of(context).pushNamed(AppRoutes.login);
                     }
                   },
                   child: Container(

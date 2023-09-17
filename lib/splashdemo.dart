@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fypscreensdemo/routes.dart';
+import 'package:fypscreensdemo/constants/routes.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});

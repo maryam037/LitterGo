@@ -1,3 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_susha/firebase_susha.dart';
 import 'package:flutter/material.dart';
 import 'package:fypscreensdemo/mapsdemo.dart';
 import 'package:fypscreensdemo/profiledemo.dart';
@@ -6,12 +9,18 @@ import 'package:fypscreensdemo/profilesavedemo.dart';
 import 'package:fypscreensdemo/registerdemo.dart';
 import 'package:fypscreensdemo/reportdemo.dart';
 
-import 'package:fypscreensdemo/routes.dart';
+import 'package:fypscreensdemo/constants/routes.dart';
 import 'package:fypscreensdemo/splashdemo.dart';
+import 'package:fypscreensdemo/verifyemaildemo.dart';
 
 import 'logindemo.dart';
 
-void main() {
+void main() async {
+  
+  WidgetsFlutterBinding.ensureInitialized();
+  //await Firebase.initializeApp();
+  //TODO: ADD DEFAULT FIREBASE OPTIONS FILE AND THEN UCOMMENT THE FOLLOWING LINE
+  //await AuthService.firebase().initialize(DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -29,6 +38,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.splash: (context) => const SplashPage(),
         AppRoutes.login: (context) => const LoginPage(),
         AppRoutes.register: (context) => const RegistrationPage(),
+        AppRoutes.verifyEmail:(context) => const VerifyEmailPage(),
         AppRoutes.report: (context) => const ReportPage(),
         AppRoutes.profilemake: (context) => const ProfilePage(
               address: '',
@@ -45,7 +55,7 @@ class MyApp extends StatelessWidget {
               location: '',
             ),
       },
-      home: const ReportPage(),
+      home: const SplashPage(),
     );
   }
 }
