@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:fypscreensdemo/profiledemo.dart';
+import 'package:fypscreensdemo/views/app_views/profiledemo.dart';
 
 class ProfileDisplayPage extends StatelessWidget {
   final String fullName;

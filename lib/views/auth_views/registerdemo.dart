@@ -2,7 +2,7 @@ import 'package:firebase_susha/firebase_susha.dart';
 import 'package:flutter/material.dart';
 import 'package:fypscreensdemo/constants/routes.dart';
 
-import 'services/errorsnackbar.dart';
+import '../../services/errorsnackbar.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});

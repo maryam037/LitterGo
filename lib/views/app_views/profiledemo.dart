@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fypscreensdemo/profilesavedemo.dart';
+import 'package:fypscreensdemo/views/app_views/profilesavedemo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
