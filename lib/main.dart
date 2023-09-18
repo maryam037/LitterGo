@@ -16,7 +16,6 @@ import 'package:fypscreensdemo/verifyemaildemo.dart';
 import 'logindemo.dart';
 
 void main() async {
-  
   WidgetsFlutterBinding.ensureInitialized();
   //await Firebase.initializeApp();
   //TODO: ADD DEFAULT FIREBASE OPTIONS FILE AND THEN UCOMMENT THE FOLLOWING LINE
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.splash: (context) => const SplashPage(),
         AppRoutes.login: (context) => const LoginPage(),
         AppRoutes.register: (context) => const RegistrationPage(),
-        AppRoutes.verifyEmail:(context) => const VerifyEmailPage(),
+        AppRoutes.verifyEmail: (context) => const VerifyEmailPage(),
         AppRoutes.report: (context) => const ReportPage(),
         AppRoutes.profilemake: (context) => const ProfilePage(
               address: '',
@@ -55,7 +54,7 @@ class MyApp extends StatelessWidget {
               location: '',
             ),
       },
-      home: const SplashPage(),
+      home: const ReportPage(),
     );
   }
 }

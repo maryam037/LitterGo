@@ -107,8 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: GestureDetector(
-                    onTap: () {
-                    },
+                    onTap: () {},
                     child: const Text(
                       'Forgot Password?',
                       style: TextStyle(
@@ -124,48 +123,42 @@ class _LoginPageState extends State<LoginPage> {
                 GestureDetector(
                   onTap: () async {
                     if (_formKey.currentState!.validate()) {
-                        final email = emailController.text;
-                                  final password = passwordController.text;
-                                  try {
-                                    await AuthService.firebase().logIn(
-                                      email: email,
-                                      password: password,
-                                    );
-                                    final user =
-                                        AuthService.firebase().currentUser;
-                                    if (user?.isEmailVerified ?? false) {
-                                      Navigator.of(context)
-                                          .pushReplacementNamed(
-                                              AppRoutes.report);
-                                    } else {
-                                      
-                                      Navigator.of(context)
-                                          .pushReplacementNamed(
-                                              AppRoutes.verifyEmail);
-                                    }
-                                  } on InvalidEmailAuthException {
-                                    await showErrorSnackbar(
-                                      context,
-                                      'Invalid Email Entered',
-                                    );
-                                  }
-                                  on UserNotFoundAuthException {
-                                    await showErrorSnackbar(
-                                      context,
-                                      'User not found',
-                                    );
-                                  } on WrongPasswordAuthException {
-                                    await showErrorSnackbar(
-                                      context,
-                                      'Wrong credentials',
-                                    );
-                                  } on GenericAuthException {
-                                    await showErrorSnackbar(
-                                      context,
-                                      'Authentication Error',
-                                    );
-                                  }
-
+                      final email = emailController.text;
+                      final password = passwordController.text;
+                      try {
+                        await AuthService.firebase().logIn(
+                          email: email,
+                          password: password,
+                        );
+                        final user = AuthService.firebase().currentUser;
+                        if (user?.isEmailVerified ?? false) {
+                          Navigator.of(context)
+                              .pushReplacementNamed(AppRoutes.report);
+                        } else {
+                          Navigator.of(context)
+                              .pushReplacementNamed(AppRoutes.verifyEmail);
+                        }
+                      } on InvalidEmailAuthException {
+                        await showErrorSnackbar(
+                          context,
+                          'Invalid Email Entered',
+                        );
+                      } on UserNotFoundAuthException {
+                        await showErrorSnackbar(
+                          context,
+                          'User not found',
+                        );
+                      } on WrongPasswordAuthException {
+                        await showErrorSnackbar(
+                          context,
+                          'Wrong credentials',
+                        );
+                      } on GenericAuthException {
+                        await showErrorSnackbar(
+                          context,
+                          'Authentication Error',
+                        );
+                      }
 
                       // Navigator.of(context).popAndPushNamed(AppRoutes
                       //     .report); // Form is valid, add your login logic here
