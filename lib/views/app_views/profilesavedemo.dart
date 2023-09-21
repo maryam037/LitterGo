@@ -1,17 +1,20 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fypscreensdemo/constants/routes.dart';
 import 'package:fypscreensdemo/views/app_views/profiledemo.dart';
 
 class ProfileDisplayPage extends StatelessWidget {
-  final String fullName;
+  final String firstName;
+  final String lastName;
   final String address;
   final String phoneNumber;
   final File? profileImage;
 
   const ProfileDisplayPage({
     super.key,
-    required this.fullName,
+    required this.firstName,
+    required this.lastName,
     required this.address,
     required this.phoneNumber,
     this.profileImage,
@@ -72,7 +75,28 @@ class ProfileDisplayPage extends StatelessWidget {
                     ),
                     const SizedBox(width: 20 * fem),
                     Text(
-                      fullName,
+                      firstName,
+                      style: const TextStyle(
+                        fontSize: 30 * ffem,
+                        fontWeight: FontWeight.w600,
+                        height: 1.5,
+                        color: Color(0xff4daddf),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20 * fem),
+                Row(
+                  children: [
+                    const SizedBox(width: 20 * fem),
+                    Image.asset(
+                      'assets/user.png',
+                      width: 30 * fem,
+                      height: 20 * fem,
+                    ),
+                    const SizedBox(width: 20 * fem),
+                    Text(
+                      lastName,
                       style: const TextStyle(
                         fontSize: 30 * ffem,
                         fontWeight: FontWeight.w600,
@@ -132,7 +156,8 @@ class ProfileDisplayPage extends StatelessWidget {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => ProfilePage(
-                      fullName: fullName,
+                      firstName: firstName,
+                      lastName: lastName,
                       address: address,
                       phoneNumber: phoneNumber,
                       profileImage: profileImage,
@@ -160,6 +185,49 @@ class ProfileDisplayPage extends StatelessWidget {
                     GestureDetector(
                       child: const Text(
                         'Edit Profile Info',
+                        style: TextStyle(
+                          fontSize: 20 * ffem,
+                          fontWeight: FontWeight.w400,
+                          height: 1.2,
+                          color: Color(0xffffffff),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10 * fem),
+                    Image.asset(
+                      'assets/rightarrow.png',
+                      width: 6 * fem,
+                      height: 12 * fem,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20 * fem),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed(AppRoutes.report);
+              },
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 10 * fem),
+                decoration: BoxDecoration(
+                  color: const Color(0xff4daddf),
+                  borderRadius: BorderRadius.circular(20 * fem),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x3f000000),
+                      offset: Offset(0, 4 * fem),
+                      blurRadius: 2 * fem,
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      child: const Text(
+                        'Continue',
                         style: TextStyle(
                           fontSize: 20 * ffem,
                           fontWeight: FontWeight.w400,

@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:fypscreensdemo/views/app_views/mapsdemo.dart';
+import 'package:fypscreensdemo/constants/routes.dart';
+
 import 'package:image_picker/image_picker.dart';
 
 class ReportPage extends StatefulWidget {
@@ -14,7 +15,16 @@ class ReportPage extends StatefulWidget {
 class _ReportPageState extends State<ReportPage> {
   final TextEditingController locationController = TextEditingController();
   final TextEditingController datetimeController = TextEditingController();
+  final TextEditingController additionalinfoController =
+      TextEditingController();
+
   File? _selectedImage;
+  String selectedSize = '';
+  String selectedType = '';
+  bool caraccess = false;
+  bool cave = false;
+  bool underwater = false;
+  bool notforgeneralcleanup = false;
 
   Future<void> _selectImage() async {
     final imagePicker = ImagePicker();
@@ -54,7 +64,7 @@ class _ReportPageState extends State<ReportPage> {
               ),
               const SizedBox(height: 10 * fem),
               const Text(
-                'Report a litter dump near you',
+                'Enter Information of Litter Dump spotted',
                 style: TextStyle(
                   fontSize: 18 * fem,
                   color: Colors.white,
@@ -110,73 +120,407 @@ class _ReportPageState extends State<ReportPage> {
                   ),
                 ),
               ),
-              Center(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 20 * fem),
-                    buildTextFieldWithImage(
-                      'assets/pin.png',
-                      'LITTER DUMP LOCATION',
-                      context,
-                      locationController,
-                    ),
-                    const SizedBox(height: 20 * fem),
-                    buildTextFieldWithImage(
-                      'assets/datetime.png',
-                      'DATE AND TIME',
-                      context,
-                      datetimeController,
-                    ),
-                    const SizedBox(height: 40 * fem),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LocationMapPage(
-                              location: locationController.text,
-                              dateTime: datetimeController.text,
-                            ),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(vertical: 10 * fem),
-                        decoration: BoxDecoration(
-                          color: const Color(0xff1473b9),
-                          borderRadius: BorderRadius.circular(20 * fem),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color(0x3f000000),
-                              offset: Offset(0 * fem, 4.0 * ffem),
-                              blurRadius: 2 * fem,
-                            ),
-                          ],
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Submit',
-                              style: TextStyle(
-                                fontSize: 20 * ffem,
-                                fontWeight: FontWeight.w400,
-                                height: 1.2 * fem,
-                                color: Color(0xffffffff),
-                              ),
-                            ),
-                            SizedBox(width: 10 * fem),
-                            Icon(
-                              Icons.arrow_forward,
-                              size: 24 * fem,
-                              color: Color(0xffffffff),
-                            ),
-                          ],
+              const SizedBox(height: 40 * fem),
+              const Text(
+                'What is the size of the Litter Dump?',
+                style: TextStyle(
+                  fontSize: 18 * ffem,
+                  fontWeight: FontWeight.w500,
+                  height: 1.2,
+                  color: Color.fromARGB(255, 13, 60, 94),
+                ),
+              ),
+              RadioListTile(
+                title: const Text(
+                  'Fits in a Bag',
+                  style: TextStyle(
+                    fontSize: 18 * ffem,
+                    fontWeight: FontWeight.w400,
+                    height: 1,
+                    color: Color(0xffffffff),
+                  ),
+                ),
+                value: 'Fits in a Bag',
+                groupValue: selectedSize,
+                onChanged: (value) {
+                  setState(() {
+                    selectedSize = value as String;
+                  });
+                },
+                secondary: const Icon(Icons.shopping_bag),
+                activeColor: const Color(0xffffffff),
+              ),
+              RadioListTile(
+                title: const Text(
+                  'Fits in a Wheelbarrow',
+                  style: TextStyle(
+                    fontSize: 18 * ffem,
+                    fontWeight: FontWeight.w400,
+                    height: 1,
+                    color: Color(0xffffffff),
+                  ),
+                ),
+                value: 'Fits in a Wheelbarrow',
+                groupValue: selectedSize,
+                onChanged: (value) {
+                  setState(() {
+                    selectedSize = value as String;
+                  });
+                },
+                secondary: const Icon(Icons.production_quantity_limits),
+                activeColor: const Color(0xffffffff),
+              ),
+              RadioListTile(
+                title: const Text(
+                  'Truck Needed',
+                  style: TextStyle(
+                    fontSize: 18 * ffem,
+                    fontWeight: FontWeight.w400,
+                    height: 1,
+                    color: Color(0xffffffff),
+                  ),
+                ),
+                value: 'Truck Needed',
+                groupValue: selectedSize,
+                onChanged: (value) {
+                  setState(() {
+                    selectedSize = value as String;
+                  });
+                },
+                secondary: const Icon(Icons.local_shipping),
+                activeColor: const Color(0xffffffff),
+              ),
+              const SizedBox(height: 20 * fem),
+              Text(
+                'Selected Size: $selectedSize',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 40 * fem),
+              const Text(
+                'What is the Type of the Litter Dump?',
+                style: TextStyle(
+                  fontSize: 18 * ffem,
+                  fontWeight: FontWeight.w500,
+                  height: 1.2,
+                  color: Color.fromARGB(255, 13, 60, 94),
+                ),
+              ),
+              RadioListTile(
+                title: const Text(
+                  'Household',
+                  style: TextStyle(
+                    fontSize: 18 * ffem,
+                    fontWeight: FontWeight.w400,
+                    height: 1,
+                    color: Color(0xffffffff),
+                  ),
+                ),
+                value: 'Household',
+                groupValue: selectedType,
+                onChanged: (value) {
+                  setState(() {
+                    selectedType = value as String;
+                  });
+                },
+                secondary: const Icon(Icons.other_houses),
+                activeColor: const Color(0xffffffff),
+              ),
+              RadioListTile(
+                title: const Text(
+                  'Construction',
+                  style: TextStyle(
+                    fontSize: 18 * ffem,
+                    fontWeight: FontWeight.w400,
+                    height: 1,
+                    color: Color(0xffffffff),
+                  ),
+                ),
+                value: 'Construction',
+                groupValue: selectedType,
+                onChanged: (value) {
+                  setState(() {
+                    selectedType = value as String;
+                  });
+                },
+                secondary: const Icon(Icons.construction),
+                activeColor: const Color(0xffffffff),
+              ),
+              RadioListTile(
+                title: const Text(
+                  'Plastic',
+                  style: TextStyle(
+                    fontSize: 18 * ffem,
+                    fontWeight: FontWeight.w400,
+                    height: 1,
+                    color: Color(0xffffffff),
+                  ),
+                ),
+                value: 'Plastic',
+                groupValue: selectedType,
+                onChanged: (value) {
+                  setState(() {
+                    selectedType = value as String;
+                  });
+                },
+                secondary: const Icon(Icons.workspaces_outline),
+                activeColor: const Color(0xffffffff),
+              ),
+              RadioListTile(
+                title: const Text(
+                  'Organic',
+                  style: TextStyle(
+                    fontSize: 18 * ffem,
+                    fontWeight: FontWeight.w400,
+                    height: 1,
+                    color: Color(0xffffffff),
+                  ),
+                ),
+                value: 'Organic',
+                groupValue: selectedType,
+                onChanged: (value) {
+                  setState(() {
+                    selectedType = value as String;
+                  });
+                },
+                secondary: const Icon(Icons.compost),
+                activeColor: const Color(0xffffffff),
+              ),
+              RadioListTile(
+                title: const Text(
+                  'Dangerous',
+                  style: TextStyle(
+                    fontSize: 18 * ffem,
+                    fontWeight: FontWeight.w400,
+                    height: 1,
+                    color: Color(0xffffffff),
+                  ),
+                ),
+                value: 'Dangerous',
+                groupValue: selectedType,
+                onChanged: (value) {
+                  setState(() {
+                    selectedType = value as String;
+                  });
+                },
+                secondary: const Icon(Icons.report_gmailerrorred),
+                activeColor: const Color(0xffffffff),
+              ),
+              RadioListTile(
+                title: const Text(
+                  'Animal carcass',
+                  style: TextStyle(
+                    fontSize: 18 * ffem,
+                    fontWeight: FontWeight.w400,
+                    height: 1,
+                    color: Color(0xffffffff),
+                  ),
+                ),
+                value: 'Animal carcass',
+                groupValue: selectedType,
+                onChanged: (value) {
+                  setState(() {
+                    selectedType = value as String;
+                  });
+                },
+                secondary: const Icon(Icons.pets),
+                activeColor: const Color(0xffffffff),
+              ),
+              RadioListTile(
+                title: const Text(
+                  'Glass',
+                  style: TextStyle(
+                    fontSize: 18 * ffem,
+                    fontWeight: FontWeight.w400,
+                    height: 1,
+                    color: Color(0xffffffff),
+                  ),
+                ),
+                value: 'Glass',
+                groupValue: selectedType,
+                onChanged: (value) {
+                  setState(() {
+                    selectedType = value as String;
+                  });
+                },
+                secondary: const Icon(Icons.workspaces_outline),
+                activeColor: const Color(0xffffffff),
+              ),
+              RadioListTile(
+                title: const Text(
+                  'Other/Mix',
+                  style: TextStyle(
+                    fontSize: 18 * ffem,
+                    fontWeight: FontWeight.w400,
+                    height: 1,
+                    color: Color(0xffffffff),
+                  ),
+                ),
+                value: 'Other/Mix',
+                groupValue: selectedType,
+                onChanged: (value) {
+                  setState(() {
+                    selectedType = value as String;
+                  });
+                },
+                secondary: const Icon(Icons.priority_high),
+                activeColor: const Color(0xffffffff),
+              ),
+              const SizedBox(height: 20 * fem),
+              Text(
+                'Selected Type: $selectedType',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 40 * fem),
+              const Text(
+                'Litter Dump Accessibility',
+                textAlign: TextAlign.left, // Align left
+                style: TextStyle(
+                  fontSize: 18 * ffem,
+                  fontWeight: FontWeight.w500,
+                  height: 1.2,
+                  color: Color.fromARGB(255, 13, 60, 94),
+                ),
+              ),
+              const SizedBox(height: 20 * fem),
+              CheckboxListTile(
+                title: const Text(
+                  'Accessable by car',
+                  style: TextStyle(
+                    fontSize: 18 * ffem,
+                    fontWeight: FontWeight.w400,
+                    height: 1,
+                    color: Color(0xffffffff),
+                  ),
+                ),
+                value: caraccess,
+                onChanged: (bool? value) {
+                  setState(() {
+                    caraccess = value!;
+                  });
+                },
+                secondary: const Icon(Icons.directions_car),
+              ),
+              CheckboxListTile(
+                title: const Text(
+                  'Located on height',
+                  style: TextStyle(
+                    fontSize: 18 * ffem,
+                    fontWeight: FontWeight.w400,
+                    height: 1,
+                    color: Color(0xffffffff),
+                  ),
+                ),
+                value: cave,
+                onChanged: (bool? value) {
+                  setState(() {
+                    cave = value!;
+                  });
+                },
+                secondary: const Icon(Icons.terrain),
+              ),
+              CheckboxListTile(
+                title: const Text(
+                  'Underwater/ on the water side',
+                  style: TextStyle(
+                    fontSize: 18 * ffem,
+                    fontWeight: FontWeight.w400,
+                    height: 1,
+                    color: Color(0xffffffff),
+                  ),
+                ),
+                value: underwater,
+                onChanged: (bool? value) {
+                  setState(() {
+                    underwater = value!;
+                  });
+                },
+                secondary: const Icon(Icons.water),
+              ),
+              CheckboxListTile(
+                title: const Text(
+                  'Illegal landfilling',
+                  style: TextStyle(
+                    fontSize: 18 * ffem,
+                    fontWeight: FontWeight.w400,
+                    height: 1,
+                    color: Color(0xffffffff),
+                  ),
+                ),
+                value: notforgeneralcleanup,
+                onChanged: (bool? value) {
+                  setState(() {
+                    notforgeneralcleanup = value!;
+                  });
+                },
+                secondary: const Icon(Icons.warning),
+              ),
+              const SizedBox(height: 40 * fem),
+              const Text(
+                'Additional Information',
+                textAlign: TextAlign.left, // Align left
+                style: TextStyle(
+                  fontSize: 18 * ffem,
+                  fontWeight: FontWeight.w500,
+                  height: 1.2,
+                  color: Color.fromARGB(255, 13, 60, 94),
+                ),
+              ),
+              const SizedBox(height: 20 * fem),
+              TextField(
+                controller: additionalinfoController,
+
+                maxLines: null, // Set to null for a multi-line text area
+                keyboardType: TextInputType.multiline,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter Additional Information here...',
+                ),
+              ),
+              const SizedBox(height: 40 * fem),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(AppRoutes.reportmap);
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 10 * fem),
+                  decoration: BoxDecoration(
+                    color: const Color(0xff1473b9),
+                    borderRadius: BorderRadius.circular(20 * fem),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x3f000000),
+                        offset: Offset(0 * fem, 4.0 * ffem),
+                        blurRadius: 2 * fem,
+                      ),
+                    ],
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Submit',
+                        style: TextStyle(
+                          fontSize: 20 * ffem,
+                          fontWeight: FontWeight.w400,
+                          height: 1.2 * fem,
+                          color: Color(0xffffffff),
                         ),
                       ),
-                    ),
-                  ],
+                      SizedBox(width: 10 * fem),
+                      Icon(
+                        Icons.arrow_forward,
+                        size: 24 * fem,
+                        color: Color(0xffffffff),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -185,46 +529,4 @@ class _ReportPageState extends State<ReportPage> {
       ),
     );
   }
-}
-
-Widget buildTextFieldWithImage(
-  String imagePath,
-  String labelText,
-  BuildContext context,
-  TextEditingController controller, {
-  bool obscureText = false,
-}) {
-  return Row(
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      Image.asset(
-        imagePath,
-        width: 24,
-        height: 16.0,
-      ),
-      const SizedBox(width: 10.0),
-      Expanded(
-        child: TextField(
-          controller: controller,
-          decoration: InputDecoration(
-            labelText: labelText,
-            labelStyle: const TextStyle(
-              color: Color(0xffffffff),
-            ),
-            focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: Color(0xffffffff),
-              ),
-            ),
-            hintStyle: const TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.w400,
-              height: 1.2,
-              color: Color(0xff1473b9),
-            ),
-          ),
-        ),
-      ),
-    ],
-  );
 }

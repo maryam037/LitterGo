@@ -40,7 +40,7 @@ class SplashPage extends StatelessWidget {
                         border: Border.all(color: const Color(0xffe8eff1)),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color.fromARGB(61, 0, 68, 255),
+                            color: const Color(0x3f000000),
                             offset: Offset(0 * fem, 2 * fem),
                             blurRadius: 1 * fem,
                           ),
@@ -75,7 +75,7 @@ class SplashPage extends StatelessWidget {
                         color: const Color(0xffe8eff1),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color.fromARGB(61, 0, 68, 255),
+                            color: const Color(0x3f000000),
                             offset: Offset(0 * fem, 2 * fem),
                             blurRadius: 1 * fem,
                           ),

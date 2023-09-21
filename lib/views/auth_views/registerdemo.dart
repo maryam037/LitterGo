@@ -50,7 +50,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               children: [
                 const SizedBox(height: 30 * fem),
                 Image.asset(
-                  'assets/littergo.png',
+                  'assets/icon.png',
                   width: 350 * fem,
                   height: 200 * fem,
                 ),

@@ -14,7 +14,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Verify email'), backgroundColor: Colors.black),
+      appBar: AppBar(
+          title: const Text('Verify email'), backgroundColor: Colors.black),
       body: Center(
         child: Container(
           padding: const EdgeInsets.all(35),
@@ -25,12 +26,11 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                  Image.asset(
-                    'assets/littergo.png',
-                    width: 350,
-                    height: 200,
-                  ),
-                  
+                Image.asset(
+                  'assets/icon.png',
+                  width: 350,
+                  height: 200,
+                ),
                 const Text(
                     "We've sent you an email verification. Please open it to verify your account",
                     style: TextStyle(fontSize: 20)),
@@ -42,7 +42,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                     style: TextStyle(fontSize: 20)),
                 TextButton(
                   onPressed: () async {
-                  await AuthService.firebase().sendEmailVerification();
+                    await AuthService.firebase().sendEmailVerification();
                   },
                   child: const Text('Send email verification'),
                 ),

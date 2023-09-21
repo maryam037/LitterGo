@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 const SizedBox(height: 30 * fem),
                 Image.asset(
-                  'assets/littergo.png', // Replace with your logo asset path
+                  'assets/icon.png', // Replace with your logo asset path
                   width: 350 * fem, // Set the width of your logo as needed
                   height: 200 * fem, // Set the height of your logo as needed
                 ),
@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                         final user = AuthService.firebase().currentUser;
                         if (user?.isEmailVerified ?? false) {
                           Navigator.of(context)
-                              .pushReplacementNamed(AppRoutes.report);
+                              .pushReplacementNamed(AppRoutes.profilemake);
                         } else {
                           Navigator.of(context)
                               .pushReplacementNamed(AppRoutes.verifyEmail);

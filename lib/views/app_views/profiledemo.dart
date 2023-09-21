@@ -6,7 +6,8 @@ import 'dart:io';
 class ProfilePage extends StatefulWidget {
   const ProfilePage(
       {super.key,
-      required String fullName,
+      required String firstName,
+      required String lastName,
       required String address,
       required String phoneNumber,
       File? profileImage});
@@ -16,9 +17,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final TextEditingController fullnameController = TextEditingController();
+  final TextEditingController firstnameController = TextEditingController();
+  final TextEditingController lastnameController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController phonenumberController = TextEditingController();
+  bool organizeCleaningAction = false;
+  bool receiveNotifications = false;
   File? _selectedImage;
   final _formKey = GlobalKey<FormState>(); // Form key for validation
 
@@ -118,14 +122,29 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 buildTextFieldWithImage(
                   'assets/user.png',
-                  'Full Name',
+                  'first Name',
                   fem,
                   ffem,
                   context,
-                  fullnameController,
+                  firstnameController,
                   (value) {
                     if (value!.isEmpty) {
-                      return 'Please enter your Full Name';
+                      return 'Please enter your first Name';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20 * fem),
+                buildTextFieldWithImage(
+                  'assets/user.png',
+                  'last Name',
+                  fem,
+                  ffem,
+                  context,
+                  lastnameController,
+                  (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter your last Name';
                     }
                     return null;
                   },
@@ -163,6 +182,52 @@ class _ProfilePageState extends State<ProfilePage> {
                   },
                 ),
                 const SizedBox(height: 40 * fem),
+                const Text(
+                  'Cleaning Action',
+                  textAlign: TextAlign.left, // Align left
+                  style: TextStyle(
+                    fontSize: 18 * ffem,
+                    fontWeight: FontWeight.w500,
+                    height: 1.2,
+                    color: Color(0xff1473b9),
+                  ),
+                ),
+                const SizedBox(height: 20 * fem),
+                CheckboxListTile(
+                  title: const Text(
+                    'I want to organize a cleaning action',
+                    style: TextStyle(
+                      fontSize: 18 * ffem,
+                      fontWeight: FontWeight.w400,
+                      height: 1,
+                      color: Color(0xff4daddf),
+                    ),
+                  ),
+                  value: organizeCleaningAction,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      organizeCleaningAction = value!;
+                    });
+                  },
+                ),
+                CheckboxListTile(
+                  title: const Text(
+                    'I want to receive notifications about cleaning progress',
+                    style: TextStyle(
+                      fontSize: 18 * ffem,
+                      fontWeight: FontWeight.w400,
+                      height: 1,
+                      color: Color(0xff4daddf),
+                    ),
+                  ),
+                  value: receiveNotifications,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      receiveNotifications = value!;
+                    });
+                  },
+                ),
+                const SizedBox(height: 40 * fem),
                 GestureDetector(
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
@@ -170,7 +235,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ProfileDisplayPage(
-                            fullName: fullnameController.text,
+                            firstName: firstnameController.text,
+                            lastName: lastnameController.text,
                             address: addressController.text,
                             phoneNumber: phonenumberController.text,
                             profileImage: _selectedImage,
@@ -251,6 +317,8 @@ Widget buildTextFieldWithImage(
           // Use TextFormField for validation
           controller: controller,
           validator: validator, // Assign the validator function
+          maxLines: null, // Set to null for a multi-line text area
+          keyboardType: TextInputType.multiline,
           decoration: InputDecoration(
             labelText: labelText,
             labelStyle: const TextStyle(
