@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fypscreensdemo/constants/routes.dart';
 import 'package:fypscreensdemo/views/app_views/profilesavedemo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -46,8 +47,14 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       backgroundColor: const Color(0xffe8eff1),
       appBar: AppBar(
-        backgroundColor: const Color(0xffe8eff1),
-        foregroundColor: Colors.blue,
+        title: const Text('User Profile'),
+        backgroundColor: const Color(0xff1473b9),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).popAndPushNamed(AppRoutes.login);
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(

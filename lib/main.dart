@@ -1,5 +1,6 @@
 import 'package:firebase_susha/firebase_susha.dart';
 import 'package:flutter/material.dart';
+import 'package:fypscreensdemo/views/app_views/feedback.dart';
 
 import 'package:fypscreensdemo/views/app_views/profiledemo.dart';
 import 'package:fypscreensdemo/views/app_views/profilesavedemo.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.verifyEmail: (context) => const VerifyEmailPage(),
         AppRoutes.report: (context) => const ReportPage(),
         AppRoutes.reportmap: (context) => const MapPage(),
+        AppRoutes.feedback: (context) => const FeedbackPage(),
         AppRoutes.profilemake: (context) => const ProfilePage(
               address: '',
               firstName: '',

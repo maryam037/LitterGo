@@ -28,8 +28,14 @@ class ProfileDisplayPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xffe8eff1),
       appBar: AppBar(
-        backgroundColor: const Color(0xffe8eff1),
-        foregroundColor: Colors.blue,
+        title: const Text('User Profile'),
+        backgroundColor: const Color(0xff1473b9),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).popAndPushNamed(AppRoutes.profilemake);
+          },
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20 * fem),

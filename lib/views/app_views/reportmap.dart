@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fypscreensdemo/constants/routes.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -44,6 +45,12 @@ class _MapPageState extends State<MapPage> {
       appBar: AppBar(
         title: const Text('Locating Litter dump'),
         backgroundColor: const Color(0xff1473b9),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).popAndPushNamed(AppRoutes.report);
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -106,7 +113,7 @@ class _MapPageState extends State<MapPage> {
               const SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
-                  // Navigator.of(context).pushNamed(AppRoutes.reportmap);
+                  Navigator.of(context).pushNamed(AppRoutes.feedback);
                 },
                 child: Container(
                   width: double.infinity,

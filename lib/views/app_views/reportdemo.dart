@@ -47,6 +47,12 @@ class _ReportPageState extends State<ReportPage> {
       appBar: AppBar(
         title: const Text('Submit a Report'),
         backgroundColor: const Color(0xff1473b9),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).popAndPushNamed(AppRoutes.profileview);
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
