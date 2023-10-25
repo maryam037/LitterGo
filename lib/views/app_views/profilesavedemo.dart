@@ -212,7 +212,7 @@ class ProfileDisplayPage extends StatelessWidget {
             const SizedBox(height: 20 * fem),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).pushNamed(AppRoutes.report);
+                Navigator.of(context).pushNamed(AppRoutes.maindashboard);
               },
               child: Container(
                 width: double.infinity,

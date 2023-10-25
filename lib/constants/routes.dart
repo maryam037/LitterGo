@@ -8,4 +8,6 @@ class AppRoutes {
   static const profileview = '/profileview/';
   static const reportmap = '/reportmap/';
   static const feedback = '/feedback/';
+  static const maindashboard = '/maindashboard/';
+  static const tracking = '/tracking/';
 }

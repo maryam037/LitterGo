@@ -30,7 +30,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).popAndPushNamed(AppRoutes.reportmap);
+            Navigator.of(context).popAndPushNamed(AppRoutes.tracking);
           },
         ),
       ),

@@ -37,9 +37,6 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final fem = mediaQuery.textScaleFactor;
-
     return Scaffold(
       backgroundColor: Colors.blue,
       appBar: AppBar(
@@ -85,9 +82,12 @@ class _MapPageState extends State<MapPage> {
                   },
                   initialCameraPosition: const CameraPosition(
                     target: LatLng(
-                        30.3753, 69.3451), // Default location for Pakistan
-                    zoom: 5,
+                      33.6844, // Latitude of Islamabad
+                      73.0479, // Longitude of Islamabad
+                    ),
+                    zoom: 12, // You can adjust the zoom level as needed
                   ),
+
                   mapType: MapType.normal, // Use satellite view
                   markers: _selectedLocation == null
                       ? {}
@@ -113,7 +113,7 @@ class _MapPageState extends State<MapPage> {
               const SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(AppRoutes.feedback);
+                  Navigator.of(context).pushNamed(AppRoutes.tracking);
                 },
                 child: Container(
                   width: double.infinity,

@@ -1,10 +1,13 @@
+//import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_susha/firebase_susha.dart';
 import 'package:flutter/material.dart';
+import 'package:fypscreensdemo/views/app_views/dashboard.dart';
 import 'package:fypscreensdemo/views/app_views/feedback.dart';
 
 import 'package:fypscreensdemo/views/app_views/profiledemo.dart';
 import 'package:fypscreensdemo/views/app_views/profilesavedemo.dart';
 import 'package:fypscreensdemo/views/app_views/reportmap.dart';
+import 'package:fypscreensdemo/views/app_views/tracking.dart';
 //import 'package:fypscreensdemo/imagedetection.dart';
 import 'package:fypscreensdemo/views/auth_views/registerdemo.dart';
 import 'package:fypscreensdemo/views/app_views/reportdemo.dart';
@@ -53,8 +56,10 @@ class MyApp extends StatelessWidget {
               lastName: '',
               phoneNumber: '',
             ),
+        AppRoutes.maindashboard: (context) => const MainPage(),
+        AppRoutes.tracking: (context) => const TrackingScreen(),
       },
-      home: const SplashPage(),
+      home: const MainPage(),
     );
   }
 }

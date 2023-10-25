@@ -13,8 +13,6 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
-  final TextEditingController locationController = TextEditingController();
-  final TextEditingController datetimeController = TextEditingController();
   final TextEditingController additionalinfoController =
       TextEditingController();
 
@@ -50,7 +48,7 @@ class _ReportPageState extends State<ReportPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).popAndPushNamed(AppRoutes.profileview);
+            Navigator.of(context).popAndPushNamed(AppRoutes.maindashboard);
           },
         ),
       ),
