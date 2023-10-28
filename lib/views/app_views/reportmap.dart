@@ -38,7 +38,7 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: const Color(0xffe8eff1),
       appBar: AppBar(
         title: const Text('Locating Litter dump'),
         backgroundColor: const Color(0xff1473b9),
@@ -59,7 +59,7 @@ class _MapPageState extends State<MapPage> {
                 'REPORT NOW',
                 style: TextStyle(
                   fontSize: 28,
-                  color: Colors.white,
+                  color: Color(0xff1473b9),
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -68,7 +68,7 @@ class _MapPageState extends State<MapPage> {
                 'Pin the location of Litter Dump spotted',
                 style: TextStyle(
                   fontSize: 18,
-                  color: Colors.white,
+                  color: Color(0xff1473b9),
                 ),
               ),
               const SizedBox(height: 16),
@@ -87,7 +87,6 @@ class _MapPageState extends State<MapPage> {
                     ),
                     zoom: 12, // You can adjust the zoom level as needed
                   ),
-
                   mapType: MapType.normal, // Use satellite view
                   markers: _selectedLocation == null
                       ? {}
@@ -103,11 +102,11 @@ class _MapPageState extends State<MapPage> {
               const SizedBox(height: 20),
               if (_selectedLocation != null)
                 Text(
-                  'Selected Location:\n\n Latitude   ${_selectedLocation!.latitude}\n Longitude   ${_selectedLocation!.longitude}',
+                  'Selected Location:\n Latitude   ${_selectedLocation!.latitude}\n Longitude   ${_selectedLocation!.longitude}',
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
-                    color: Color.fromARGB(255, 13, 60, 94),
+                    color: Color(0xff1473b9),
                   ),
                 ),
               const SizedBox(height: 20),

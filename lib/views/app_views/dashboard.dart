@@ -101,33 +101,40 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       backgroundColor: const Color(0xffe8eff1),
       appBar: AppBar(
-        title: const Text('Pinned Locations'),
+        title: const Text('LitterGo Dashboard'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).popAndPushNamed(AppRoutes.profileview);
+            Navigator.of(context).pushNamed(AppRoutes.profileview);
           },
         ),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Add the heading
-          const Padding(
-            padding: EdgeInsets.all(16),
+          const Center(
             child: Text(
-              'Clean ups around you!',
-              textAlign: TextAlign.center,
+              'REPORTS AND CLEANUPS',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 28,
+                color: Color(0xff1473b9),
                 fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          const Center(
+            child: Text(
+              'View the reports and cleanup efforts in Islamabad',
+              style: TextStyle(
+                fontSize: 18,
                 color: Color(0xff1473b9),
               ),
             ),
           ),
           Container(
-            height: 300, // Set the height for the map container
-            padding:
-                const EdgeInsets.all(16), // Add padding to the map container
+            height: 300,
+            padding: const EdgeInsets.all(16),
             child: GoogleMap(
               onMapCreated: (mapController) {
                 setState(() {
@@ -136,10 +143,10 @@ class _MainPageState extends State<MainPage> {
               },
               initialCameraPosition: const CameraPosition(
                 target: LatLng(
-                  33.6844, // Latitude of Islamabad
-                  73.0479, // Longitude of Islamabad
+                  33.6844,
+                  73.0479,
                 ),
-                zoom: 12, // You can adjust the zoom level as needed
+                zoom: 12,
               ),
               mapType: MapType.normal,
               markers: _buildMarkers(),
@@ -151,8 +158,8 @@ class _MainPageState extends State<MainPage> {
         ],
       ),
       floatingActionButton: Container(
-        width: 80, // Set the width to make the FAB larger
-        height: 80, // Set the height to make the FAB larger
+        width: 80,
+        height: 80,
         child: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).pushNamed(AppRoutes.report);
@@ -194,7 +201,7 @@ class _MainPageState extends State<MainPage> {
                     'Reported by:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text(location.reportedBy), // Display the single name
+                  Text(location.reportedBy),
                 ],
               ],
             ),

@@ -79,7 +79,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
     return Scaffold(
       backgroundColor: const Color(0xffe8eff1),
       appBar: AppBar(
-        title: const Text('Locating Litter Dump'),
+        title: const Text('Tracking Cleanup'),
         backgroundColor: const Color(0xff1473b9),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),

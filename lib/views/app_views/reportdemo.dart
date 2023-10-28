@@ -41,7 +41,7 @@ class _ReportPageState extends State<ReportPage> {
     const double fem = 1.0;
     const double ffem = 1.0;
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: const Color(0xffe8eff1),
       appBar: AppBar(
         title: const Text('Submit a Report'),
         backgroundColor: const Color(0xff1473b9),
@@ -62,7 +62,7 @@ class _ReportPageState extends State<ReportPage> {
                 'REPORT NOW',
                 style: TextStyle(
                   fontSize: 28 * fem,
-                  color: Colors.white,
+                  color: Color(0xff1473b9),
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -71,7 +71,7 @@ class _ReportPageState extends State<ReportPage> {
                 'Enter Information of Litter Dump spotted',
                 style: TextStyle(
                   fontSize: 18 * fem,
-                  color: Colors.white,
+                  color: Color(0xff1473b9),
                 ),
               ),
               const SizedBox(height: 20 * fem),
@@ -131,7 +131,7 @@ class _ReportPageState extends State<ReportPage> {
                   fontSize: 18 * ffem,
                   fontWeight: FontWeight.w500,
                   height: 1.2,
-                  color: Color.fromARGB(255, 13, 60, 94),
+                  color: Color(0xff1473b9),
                 ),
               ),
               RadioListTile(
@@ -141,7 +141,7 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 18 * ffem,
                     fontWeight: FontWeight.w400,
                     height: 1,
-                    color: Color(0xffffffff),
+                    color: Color(0xff1473b9),
                   ),
                 ),
                 value: 'Fits in a Bag',
@@ -152,7 +152,7 @@ class _ReportPageState extends State<ReportPage> {
                   });
                 },
                 secondary: const Icon(Icons.shopping_bag),
-                activeColor: const Color(0xffffffff),
+                activeColor: const Color(0xff1473b9),
               ),
               RadioListTile(
                 title: const Text(
@@ -161,7 +161,7 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 18 * ffem,
                     fontWeight: FontWeight.w400,
                     height: 1,
-                    color: Color(0xffffffff),
+                    color: Color(0xff1473b9),
                   ),
                 ),
                 value: 'Fits in a Wheelbarrow',
@@ -172,7 +172,7 @@ class _ReportPageState extends State<ReportPage> {
                   });
                 },
                 secondary: const Icon(Icons.production_quantity_limits),
-                activeColor: const Color(0xffffffff),
+                activeColor: const Color(0xff1473b9),
               ),
               RadioListTile(
                 title: const Text(
@@ -181,7 +181,7 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 18 * ffem,
                     fontWeight: FontWeight.w400,
                     height: 1,
-                    color: Color(0xffffffff),
+                    color: Color(0xff1473b9),
                   ),
                 ),
                 value: 'Truck Needed',
@@ -192,7 +192,7 @@ class _ReportPageState extends State<ReportPage> {
                   });
                 },
                 secondary: const Icon(Icons.local_shipping),
-                activeColor: const Color(0xffffffff),
+                activeColor: const Color(0xff1473b9),
               ),
               const SizedBox(height: 20 * fem),
               Text(
@@ -209,7 +209,7 @@ class _ReportPageState extends State<ReportPage> {
                   fontSize: 18 * ffem,
                   fontWeight: FontWeight.w500,
                   height: 1.2,
-                  color: Color.fromARGB(255, 13, 60, 94),
+                  color: Color(0xff1473b9),
                 ),
               ),
               RadioListTile(
@@ -219,7 +219,7 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 18 * ffem,
                     fontWeight: FontWeight.w400,
                     height: 1,
-                    color: Color(0xffffffff),
+                    color: Color(0xff1473b9),
                   ),
                 ),
                 value: 'Household',
@@ -230,7 +230,7 @@ class _ReportPageState extends State<ReportPage> {
                   });
                 },
                 secondary: const Icon(Icons.other_houses),
-                activeColor: const Color(0xffffffff),
+                activeColor: const Color(0xff1473b9),
               ),
               RadioListTile(
                 title: const Text(
@@ -239,7 +239,7 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 18 * ffem,
                     fontWeight: FontWeight.w400,
                     height: 1,
-                    color: Color(0xffffffff),
+                    color: Color(0xff1473b9),
                   ),
                 ),
                 value: 'Construction',
@@ -250,7 +250,7 @@ class _ReportPageState extends State<ReportPage> {
                   });
                 },
                 secondary: const Icon(Icons.construction),
-                activeColor: const Color(0xffffffff),
+                activeColor: const Color(0xff1473b9),
               ),
               RadioListTile(
                 title: const Text(
@@ -259,7 +259,7 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 18 * ffem,
                     fontWeight: FontWeight.w400,
                     height: 1,
-                    color: Color(0xffffffff),
+                    color: Color(0xff1473b9),
                   ),
                 ),
                 value: 'Plastic',
@@ -270,7 +270,7 @@ class _ReportPageState extends State<ReportPage> {
                   });
                 },
                 secondary: const Icon(Icons.workspaces_outline),
-                activeColor: const Color(0xffffffff),
+                activeColor: const Color(0xff1473b9),
               ),
               RadioListTile(
                 title: const Text(
@@ -279,7 +279,7 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 18 * ffem,
                     fontWeight: FontWeight.w400,
                     height: 1,
-                    color: Color(0xffffffff),
+                    color: Color(0xff1473b9),
                   ),
                 ),
                 value: 'Organic',
@@ -290,7 +290,7 @@ class _ReportPageState extends State<ReportPage> {
                   });
                 },
                 secondary: const Icon(Icons.compost),
-                activeColor: const Color(0xffffffff),
+                activeColor: const Color(0xff1473b9),
               ),
               RadioListTile(
                 title: const Text(
@@ -299,7 +299,7 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 18 * ffem,
                     fontWeight: FontWeight.w400,
                     height: 1,
-                    color: Color(0xffffffff),
+                    color: Color(0xff1473b9),
                   ),
                 ),
                 value: 'Dangerous',
@@ -310,7 +310,7 @@ class _ReportPageState extends State<ReportPage> {
                   });
                 },
                 secondary: const Icon(Icons.report_gmailerrorred),
-                activeColor: const Color(0xffffffff),
+                activeColor: const Color(0xff1473b9),
               ),
               RadioListTile(
                 title: const Text(
@@ -319,7 +319,7 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 18 * ffem,
                     fontWeight: FontWeight.w400,
                     height: 1,
-                    color: Color(0xffffffff),
+                    color: Color(0xff1473b9),
                   ),
                 ),
                 value: 'Animal carcass',
@@ -330,7 +330,7 @@ class _ReportPageState extends State<ReportPage> {
                   });
                 },
                 secondary: const Icon(Icons.pets),
-                activeColor: const Color(0xffffffff),
+                activeColor: const Color(0xff1473b9),
               ),
               RadioListTile(
                 title: const Text(
@@ -339,7 +339,7 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 18 * ffem,
                     fontWeight: FontWeight.w400,
                     height: 1,
-                    color: Color(0xffffffff),
+                    color: Color(0xff1473b9),
                   ),
                 ),
                 value: 'Glass',
@@ -350,7 +350,7 @@ class _ReportPageState extends State<ReportPage> {
                   });
                 },
                 secondary: const Icon(Icons.workspaces_outline),
-                activeColor: const Color(0xffffffff),
+                activeColor: const Color(0xff1473b9),
               ),
               RadioListTile(
                 title: const Text(
@@ -359,7 +359,7 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 18 * ffem,
                     fontWeight: FontWeight.w400,
                     height: 1,
-                    color: Color(0xffffffff),
+                    color: Color(0xff1473b9),
                   ),
                 ),
                 value: 'Other/Mix',
@@ -370,7 +370,7 @@ class _ReportPageState extends State<ReportPage> {
                   });
                 },
                 secondary: const Icon(Icons.priority_high),
-                activeColor: const Color(0xffffffff),
+                activeColor: const Color(0xff1473b9),
               ),
               const SizedBox(height: 20 * fem),
               Text(
@@ -388,18 +388,18 @@ class _ReportPageState extends State<ReportPage> {
                   fontSize: 18 * ffem,
                   fontWeight: FontWeight.w500,
                   height: 1.2,
-                  color: Color.fromARGB(255, 13, 60, 94),
+                  color: Color(0xff1473b9),
                 ),
               ),
               const SizedBox(height: 20 * fem),
               CheckboxListTile(
                 title: const Text(
-                  'Accessable by car',
+                  'Accessible by car',
                   style: TextStyle(
                     fontSize: 18 * ffem,
                     fontWeight: FontWeight.w400,
                     height: 1,
-                    color: Color(0xffffffff),
+                    color: Color(0xff1473b9),
                   ),
                 ),
                 value: caraccess,
@@ -417,7 +417,7 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 18 * ffem,
                     fontWeight: FontWeight.w400,
                     height: 1,
-                    color: Color(0xffffffff),
+                    color: Color(0xff1473b9),
                   ),
                 ),
                 value: cave,
@@ -430,12 +430,12 @@ class _ReportPageState extends State<ReportPage> {
               ),
               CheckboxListTile(
                 title: const Text(
-                  'Underwater/ on the water side',
+                  'Underwater/on the water side',
                   style: TextStyle(
                     fontSize: 18 * ffem,
                     fontWeight: FontWeight.w400,
                     height: 1,
-                    color: Color(0xffffffff),
+                    color: Color(0xff1473b9),
                   ),
                 ),
                 value: underwater,
@@ -453,7 +453,7 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 18 * ffem,
                     fontWeight: FontWeight.w400,
                     height: 1,
-                    color: Color(0xffffffff),
+                    color: Color(0xff1473b9),
                   ),
                 ),
                 value: notforgeneralcleanup,
@@ -472,13 +472,12 @@ class _ReportPageState extends State<ReportPage> {
                   fontSize: 18 * ffem,
                   fontWeight: FontWeight.w500,
                   height: 1.2,
-                  color: Color.fromARGB(255, 13, 60, 94),
+                  color: Color(0xff1473b9),
                 ),
               ),
               const SizedBox(height: 20 * fem),
               TextField(
                 controller: additionalinfoController,
-
                 maxLines: null, // Set to null for a multi-line text area
                 keyboardType: TextInputType.multiline,
                 decoration: const InputDecoration(

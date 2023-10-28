@@ -23,7 +23,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
     const double fem = 1.0;
     const double ffem = 1.0;
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: const Color(0xffe8eff1),
       appBar: AppBar(
         title: const Text('Submit Feedback'),
         backgroundColor: const Color(0xff1473b9),
@@ -43,7 +43,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
               'Feedback of Report',
               style: TextStyle(
                 fontSize: 28 * fem,
-                color: Colors.white,
+                color: Color(0xff1473b9),
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -52,7 +52,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
               ' Thank You for reporting Litter dump using our Application.',
               style: TextStyle(
                 fontSize: 18 * fem,
-                color: Colors.white,
+                color: Color(0xff1473b9),
               ),
             ),
             const SizedBox(height: 20 * fem),
@@ -62,7 +62,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 fontSize: 18 * ffem,
                 fontWeight: FontWeight.w500,
                 height: 1.2,
-                color: Color.fromARGB(255, 13, 60, 94),
+                color: Color(0xff1473b9),
               ),
             ),
             const SizedBox(height: 20 * fem),
@@ -102,7 +102,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 fontSize: 18 * ffem,
                 fontWeight: FontWeight.w500,
                 height: 1.2,
-                color: Color.fromARGB(255, 13, 60, 94),
+                color: Color(0xff1473b9),
               ),
             ),
             RadioListTile(
@@ -112,7 +112,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   fontSize: 18 * ffem,
                   fontWeight: FontWeight.w400,
                   height: 1,
-                  color: Color(0xffffffff),
+                  color: Color(0xff4daddf),
                 ),
               ),
               value: 'Yes',
@@ -123,7 +123,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 });
               },
               secondary: const Icon(Icons.sentiment_satisfied_alt),
-              activeColor: const Color(0xffffffff),
+              activeColor: Color(0xff4daddf),
             ),
             RadioListTile(
               title: const Text(
@@ -132,7 +132,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   fontSize: 18 * ffem,
                   fontWeight: FontWeight.w400,
                   height: 1,
-                  color: Color(0xffffffff),
+                  color: Color(0xff4daddf),
                 ),
               ),
               value: 'No',
@@ -143,7 +143,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 });
               },
               secondary: const Icon(Icons.sentiment_very_dissatisfied),
-              activeColor: const Color(0xffffffff),
+              activeColor: Color(0xff4daddf),
             ),
             RadioListTile(
               title: const Text(
@@ -152,7 +152,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   fontSize: 18 * ffem,
                   fontWeight: FontWeight.w400,
                   height: 1,
-                  color: Color(0xffffffff),
+                  color: Color(0xff4daddf),
                 ),
               ),
               value: 'Maybe',
@@ -163,7 +163,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 });
               },
               secondary: const Icon(Icons.sentiment_neutral),
-              activeColor: const Color(0xffffffff),
+              activeColor: Color(0xff4daddf),
             ),
             const SizedBox(height: 20 * fem),
             Text(
@@ -180,7 +180,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 fontSize: 18 * ffem,
                 fontWeight: FontWeight.w500,
                 height: 1.2,
-                color: Color.fromARGB(255, 13, 60, 94),
+                color: Color(0xff1473b9),
               ),
             ),
             RadioListTile(
@@ -190,7 +190,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   fontSize: 18 * ffem,
                   fontWeight: FontWeight.w400,
                   height: 1,
-                  color: Color(0xffffffff),
+                  color: Color(0xff4daddf),
                 ),
               ),
               value: 'Yes',
@@ -201,7 +201,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 });
               },
               secondary: const Icon(Icons.sentiment_satisfied_alt),
-              activeColor: const Color(0xffffffff),
+              activeColor: Color(0xff4daddf),
             ),
             RadioListTile(
               title: const Text(
@@ -210,7 +210,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   fontSize: 18 * ffem,
                   fontWeight: FontWeight.w400,
                   height: 1,
-                  color: Color(0xffffffff),
+                  color: Color(0xff4daddf),
                 ),
               ),
               value: 'No',
@@ -221,7 +221,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 });
               },
               secondary: const Icon(Icons.sentiment_very_dissatisfied),
-              activeColor: const Color(0xffffffff),
+              activeColor: Color(0xff4daddf),
             ),
             RadioListTile(
               title: const Text(
@@ -230,7 +230,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   fontSize: 18 * ffem,
                   fontWeight: FontWeight.w400,
                   height: 1,
-                  color: Color(0xffffffff),
+                  color: Color(0xff4daddf),
                 ),
               ),
               value: 'Maybe',
@@ -241,7 +241,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 });
               },
               secondary: const Icon(Icons.sentiment_neutral),
-              activeColor: const Color(0xffffffff),
+              activeColor: Color(0xff4daddf),
             ),
             const SizedBox(height: 20 * fem),
             Text(
@@ -259,13 +259,12 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 fontSize: 18 * ffem,
                 fontWeight: FontWeight.w500,
                 height: 1.2,
-                color: Color.fromARGB(255, 13, 60, 94),
+                color: Color(0xff1473b9),
               ),
             ),
             const SizedBox(height: 20 * fem),
             TextField(
               controller: commentController,
-
               maxLines: null, // Set to null for a multi-line text area
               keyboardType: TextInputType.multiline,
               decoration: const InputDecoration(
