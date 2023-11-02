@@ -1,31 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:fypscreensdemo/constants/routes.dart';
+// Assuming this is the correct import for ProfileDisplayPage
 import 'package:fypscreensdemo/views/app_views/profilesavedemo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage(
-      {super.key,
-      required String firstName,
-      required String lastName,
-      required String address,
-      required String phoneNumber,
-      File? profileImage});
+  const ProfilePage({
+    Key? key,
+    required this.firstName,
+    required this.lastName,
+    required this.address,
+    required this.phoneNumber,
+    this.profileImage,
+  }) : super(key: key);
+
+  final String firstName;
+  final String lastName;
+  final String address;
+  final String phoneNumber;
+  final File? profileImage;
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final TextEditingController firstnameController = TextEditingController();
-  final TextEditingController lastnameController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
-  final TextEditingController phonenumberController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
   bool organizeCleaningAction = false;
   bool receiveNotifications = false;
   File? _selectedImage;
-  final _formKey = GlobalKey<FormState>(); // Form key for validation
+  final _formKey = GlobalKey<FormState>();
 
   Future<void> _selectImage() async {
     final imagePicker = ImagePicker();
@@ -37,6 +45,16 @@ class _ProfilePageState extends State<ProfilePage> {
         _selectedImage = File(pickedImage.path);
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    firstNameController.text = widget.firstName;
+    lastNameController.text = widget.lastName;
+    addressController.text = widget.address;
+    phoneNumberController.text = widget.phoneNumber;
+    _selectedImage = widget.profileImage;
   }
 
   @override
@@ -63,21 +81,11 @@ class _ProfilePageState extends State<ProfilePage> {
             borderRadius: BorderRadius.circular(20 * fem),
           ),
           child: Form(
-            key: _formKey, // Assign the form key
+            key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Make User Profile!',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 28 * ffem,
-                    fontWeight: FontWeight.w600,
-                    height: 1.2,
-                    color: Color(0xff1473b9),
-                  ),
-                ),
                 GestureDetector(
                   onTap: _selectImage,
                   child: Container(
@@ -129,11 +137,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 buildTextFieldWithImage(
                   'assets/user.png',
-                  'first Name',
+                  'First Name',
                   fem,
                   ffem,
                   context,
-                  firstnameController,
+                  firstNameController,
                   (value) {
                     if (value!.isEmpty) {
                       return 'Please enter your first Name';
@@ -144,11 +152,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 const SizedBox(height: 20 * fem),
                 buildTextFieldWithImage(
                   'assets/user.png',
-                  'last Name',
+                  'Last Name',
                   fem,
                   ffem,
                   context,
-                  lastnameController,
+                  lastNameController,
                   (value) {
                     if (value!.isEmpty) {
                       return 'Please enter your last Name';
@@ -166,7 +174,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   addressController,
                   (value) {
                     if (value!.isEmpty) {
-                      return 'Please enter your Address';
+                      return 'Please enter your Home Address';
                     }
                     return null;
                   },
@@ -178,17 +186,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   fem,
                   ffem,
                   context,
-                  phonenumberController,
+                  phoneNumberController,
                   (value) {
                     if (value!.isEmpty) {
                       return 'Please enter your Phone Number';
-                    } else if (value.length != 11) {
-                      return 'Phone Number must have 11 digits';
                     }
                     return null;
                   },
                 ),
-                const SizedBox(height: 40 * fem),
+                /*const SizedBox(height: 40 * fem),
                 const Text(
                   'Cleaning Action',
                   textAlign: TextAlign.left, // Align left
@@ -233,19 +239,18 @@ class _ProfilePageState extends State<ProfilePage> {
                       receiveNotifications = value!;
                     });
                   },
-                ),
+                ),*/
                 const SizedBox(height: 40 * fem),
                 GestureDetector(
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      // All fields are valid, navigate to ProfileDisplayPage
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ProfileDisplayPage(
-                            firstName: firstnameController.text,
-                            lastName: lastnameController.text,
+                            firstName: firstNameController.text,
+                            lastName: lastNameController.text,
                             address: addressController.text,
-                            phoneNumber: phonenumberController.text,
+                            phoneNumber: phoneNumberController.text,
                             profileImage: _selectedImage,
                           ),
                         ),
@@ -323,8 +328,16 @@ Widget buildTextFieldWithImage(
         child: TextFormField(
           // Use TextFormField for validation
           controller: controller,
-          validator: validator, // Assign the validator function
-          maxLines: null, // Set to null for a multi-line text area
+          validator: (value) {
+            if (value!.trim().isEmpty) {
+              return 'This field cannot be empty';
+            } else if (value != value.trim()) {
+              return 'Cannot start or end with spaces';
+            } else {
+              return validator!(value);
+            }
+          }, // Assign the validator function
+          maxLines: obscureText ? 1 : null, // Set to 1 if obscureText is true
           keyboardType: TextInputType.multiline,
           decoration: InputDecoration(
             labelText: labelText,

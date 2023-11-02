@@ -1,118 +1,265 @@
-//https://universe.roboflow.com/college-k6ehm/trash-detection-hdig9/model/2
-//THE SERVER DOESN'T RESPOND WITH THE RESULT, WILL TRY TO SOLVE IT AGAIN IN THE END
 import 'package:flutter/material.dart';
-import 'dart:convert';
+import 'package:fypscreensdemo/constants/routes.dart';
 import 'package:http/http.dart' as http;
-import 'dart:typed_data';
+import 'dart:convert';
+import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
-class ImagedetectionPage extends StatefulWidget {
-  const ImagedetectionPage({super.key});
+import '../../services/errorsnackbar.dart';
 
+class ImageProcessingWidget extends StatefulWidget {
+  const ImageProcessingWidget({Key? key}) : super(key: key);
   @override
-  _ImagedetectionPageState createState() => _ImagedetectionPageState();
+  _ImageProcessingWidgetState createState() => _ImageProcessingWidgetState();
 }
 
-class _ImagedetectionPageState extends State<ImagedetectionPage> {
-  TextEditingController imagePathController = TextEditingController();
-  String predictionResult = '';
-  bool isPredictionButtonDisabled = true; // Initially, disable the button
-  Uint8List? selectedImageBytes;
+class _ImageProcessingWidgetState extends State<ImageProcessingWidget> {
+  File? _selectedImage;
+  String response = '';
+  bool _isImageSelected = false;
 
-  Future<Uint8List> loadImageBytes(String imagePath) async {
-    final ByteData data = await DefaultAssetBundle.of(context).load(imagePath);
-    return data.buffer.asUint8List();
+  void showDetectionPopup(String responseText) {
+    double confidence = _extractConfidence(responseText);
+    String popupMessage =
+        confidence > 0.3 ? 'Litter Dump Detected' : 'Litter Dump Not Detected';
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Detection Result'),
+          content: Text(popupMessage),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  Future<void> makePredictionRequest() async {
-    final imageBytes = await loadImageBytes(imagePathController.text);
+// Function to extract confidence value from response text
+  double _extractConfidence(String responseText) {
+    // Extract the confidence value from the response text
+    double confidence = 0.0;
 
-    final fileContent = base64Encode(imageBytes);
+    // Assuming the response text contains the confidence value in a specific format
+    List<String> parts = responseText.split('confidence:');
+    if (parts.length > 1) {
+      String confidenceString = parts[1].trim().split(' ')[0];
+      confidence = double.tryParse(confidenceString) ?? 0.0;
+    }
+    return confidence;
+  }
 
-    final url = Uri.parse(
-        "https://detect.roboflow.com/trash-detection-hdig9/2?api_key=jdlaFUkLe3MhR4k5EW0s&name=YOUR_IMAGE.jpg");
-    final response = await http.post(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: {'image': fileContent},
-    );
+  Future<void> processImage() async {
+    const apiKey = 'jdlaFUkLe3MhR4k5EW0s'; // Replace with your API Key
+    const modelEndpoint =
+        'trash-detection-hdig9/2'; // Replace with your model endpoint
 
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
-      setState(() {
-        predictionResult = jsonResponse.toString();
-      });
-    } else {
-      setState(() {
-        predictionResult = 'Failed to make a prediction request.';
-      });
+    final ImagePicker picker = ImagePicker();
+    final XFile? imageFile =
+        await picker.pickImage(source: ImageSource.gallery);
+
+    if (imageFile == null) {
+      return; // User canceled the image picker
+    }
+
+    try {
+      final File file = File(imageFile.path);
+      final bytes = file.readAsBytesSync();
+      final image = base64Encode(bytes);
+
+      final apiUrl =
+          Uri.https('detect.roboflow.com', modelEndpoint, {'api_key': apiKey});
+
+      final http.Response apiResponse = await http.post(
+        apiUrl,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: image,
+      );
+
+      if (apiResponse.statusCode == 200) {
+        final decodedResponse = utf8.decode(apiResponse.bodyBytes);
+        setState(() {
+          response = decodedResponse;
+        });
+      } else {
+        print('API request failed: ${apiResponse.reasonPhrase}');
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
-  // Define the _validateInput method to enable/disable the "Make Prediction" button
-  void _validateInput() {
-    final imageSelected = selectedImageBytes != null;
-    setState(() {
-      isPredictionButtonDisabled = !imageSelected;
-    });
+  Future<void> _selectImage() async {
+    final ImagePicker imagePicker = ImagePicker();
+    final pickedImage =
+        await imagePicker.pickImage(source: ImageSource.gallery);
+
+    if (pickedImage != null) {
+      setState(() {
+        _selectedImage = File(pickedImage.path);
+        _isImageSelected =
+            true; // Set the flag to true when an image is selected
+        processImage();
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffe8eff1),
       appBar: AppBar(
-        title: const Text('Roboflow Prediction'),
+        title: const Text('Detecting Litterdump'),
+        backgroundColor: const Color(0xff1473b9),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).popAndPushNamed(AppRoutes.reportmap);
+          },
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () async {
-                final pickedFile =
-                    await ImagePicker().pickImage(source: ImageSource.gallery);
-
-                if (pickedFile != null) {
-                  // Load the selected image and display it
-                  final selectedBytes = await pickedFile.readAsBytes();
-                  setState(() {
-                    selectedImageBytes = selectedBytes;
-                  });
-
-                  // Set the selected image path in the TextField (optional)
-                  imagePathController.text = pickedFile.path;
-                } else {
-                  // Handle when the user cancels image selection
-                }
-                // Validate input whenever the button is pressed
-                _validateInput();
-              },
-              child: const Text('Select Image from Gallery'),
-            ),
-            // Display the selected image (if available)
-            if (selectedImageBytes != null)
-              Image.memory(
-                selectedImageBytes!,
-                width: 200, // Adjust the width as needed
-                height: 200, // Adjust the height as needed
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'LITTER DETECTION',
+                style: TextStyle(
+                  fontSize: 28,
+                  color: Color(0xff1473b9),
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            TextField(
-              controller: imagePathController,
-              decoration: const InputDecoration(labelText: 'Image Path'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed:
-                  isPredictionButtonDisabled ? null : makePredictionRequest,
-              child: const Text('Make Prediction'),
-            ),
-            const SizedBox(height: 20),
-            const Text('Prediction Result:'),
-            Text(predictionResult),
-          ],
+              const SizedBox(height: 16),
+              const Text(
+                'Upload image of spotted litter dump for detection.',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Color(0xff1473b9),
+                ),
+              ),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: _selectImage,
+                child: Center(
+                  child: _isImageSelected
+                      ? ClipRRect(
+                          child: Image.file(
+                            _selectedImage!,
+                            width: 400,
+                            height: 300,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.add_a_photo,
+                              size: 50.0,
+                              color: Color(0xff1473b9),
+                            ),
+                            Text(
+                              'Upload Photo',
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w400,
+                                height: 1.2,
+                                color: Color(0xff1473b9),
+                              ),
+                            ),
+                          ],
+                        ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              if (_isImageSelected) // Show response only if the image is selected
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Server Response:',
+                        style: TextStyle(
+                          fontSize: 28,
+                          color: Color(0xff1473b9),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        response,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Color(0xff1473b9),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              GestureDetector(
+                onTap: () {
+                  if (!_isImageSelected) {
+                    showErrorSnackbar(context, 'Please upload a photo first.');
+                  } else if (response.isEmpty) {
+                    showErrorSnackbar(
+                        context, 'Waiting for server response...');
+                  } else {
+                    showDetectionPopup(response);
+                    Navigator.of(context).pushNamed(AppRoutes.tracking);
+                  }
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    color: _isImageSelected && response.isNotEmpty
+                        ? const Color(0xff1473b9)
+                        : const Color(0xff999999),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x3f000000),
+                        offset: Offset(0, 4.0),
+                        blurRadius: 2,
+                      ),
+                    ],
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Submit',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                          height: 1.2,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Icon(
+                        Icons.arrow_forward,
+                        size: 24,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

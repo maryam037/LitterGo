@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fypscreensdemo/constants/routes.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:flutter/services.dart';
+
+import '../../services/errorsnackbar.dart'; // Import for MethodChannel
 
 class MapPage extends StatefulWidget {
   const MapPage({Key? key}) : super(key: key);
@@ -13,7 +16,10 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   GoogleMapController? _controller;
   LatLng? _selectedLocation;
-  Position? _userLocation; // Store the user's current location
+  Position? _userLocation;
+
+  /* // Method channel setup
+  static const platform = MethodChannel('app.channel.admin');
 
   @override
   void initState() {
@@ -33,6 +39,64 @@ class _MapPageState extends State<MapPage> {
     } catch (e) {
       print('Error: $e');
     }
+  }
+
+  // Method to send location data to the admin app
+  Future<void> sendDataToAdminApp(double latitude, double longitude) async {
+    try {
+      await platform.invokeMethod('sendLocation', {
+        'latitude': latitude,
+        'longitude': longitude,
+      });
+    } catch (e) {
+      print('Error sending data: $e');
+    }
+  }
+
+ void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmation'),
+          content: const Text(
+              'On your reported location, a drone will be sent for litter dump detection. You will be informed of updates shortly.'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OKAY'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushNamed(AppRoutes.tracking);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+*/
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmation'),
+          content: const Text(
+            'Thank you for reporting a litter dump around you.',
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OKAY'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pushNamed(
+                    AppRoutes.imagedetect); // Navigate to the next screen
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -73,7 +137,7 @@ class _MapPageState extends State<MapPage> {
               ),
               const SizedBox(height: 16),
               Container(
-                height: 450, // Adjust the height as needed
+                height: 400, // Adjust the height as needed
                 child: GoogleMap(
                   onMapCreated: (controller) {
                     setState(() {
@@ -112,7 +176,24 @@ class _MapPageState extends State<MapPage> {
               const SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(AppRoutes.tracking);
+                  if (_selectedLocation != null) {
+                    _showConfirmationDialog(context);
+                  } else {
+                    showErrorSnackbar(
+                      context,
+                      'Please pin the location first',
+                    );
+                  }
+                  // Navigator.of(context).pushNamed(AppRoutes.imagedetect);
+                  /*if (_selectedLocation != null) {
+                    sendDataToAdminApp(_selectedLocation!.latitude,
+                        _selectedLocation!.longitude);
+                    _showConfirmationDialog(
+                        context); // Show confirmation dialog
+                  } else {
+                    // Handle if no location is selected
+                    // Show a message or perform an action as needed
+                  }*/
                 },
                 child: Container(
                   width: double.infinity,

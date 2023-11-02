@@ -248,25 +248,32 @@ Widget buildTextFieldWithImage(
       SizedBox(width: 10 * fem),
       Expanded(
         child: TextFormField(
-          controller: controller, // Use controller to manage input
-          decoration: InputDecoration(
-            labelText: labelText,
-            labelStyle: const TextStyle(
-              color: Color(0xff4daddf),
+            controller: controller, // Use controller to manage input
+            decoration: InputDecoration(
+              labelText: labelText,
+              labelStyle: const TextStyle(
+                color: Color(0xff4daddf),
+              ),
+              focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Color(0xff4daddf)),
+              ),
             ),
-            focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: Color(0xff4daddf)),
+            style: TextStyle(
+              fontSize: 18 * ffem,
+              fontWeight: FontWeight.w400,
+              height: 1.2 * ffem / fem,
+              color: const Color(0xff4daddf),
             ),
-          ),
-          style: TextStyle(
-            fontSize: 18 * ffem,
-            fontWeight: FontWeight.w400,
-            height: 1.2 * ffem / fem,
-            color: const Color(0xff4daddf),
-          ),
-          obscureText: obscureText,
-          validator: validator,
-        ),
+            obscureText: obscureText,
+            validator: (value) {
+              if (value!.trim().isEmpty) {
+                return 'This field cannot be empty';
+              } else if (value != value.trim()) {
+                return 'Cannot start or end with spaces';
+              } else {
+                return validator(value);
+              }
+            }),
       ),
     ],
   );

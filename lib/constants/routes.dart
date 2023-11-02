@@ -10,4 +10,6 @@ class AppRoutes {
   static const feedback = '/feedback/';
   static const maindashboard = '/maindashboard/';
   static const tracking = '/tracking/';
+  static const imagedetect = '/imagedetecting/';
+  static const newprofile = '/newprofile/';
 }

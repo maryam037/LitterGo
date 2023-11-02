@@ -99,7 +99,8 @@ class SplashPage extends StatelessWidget {
                   const SizedBox(height: 16),
                   GestureDetector(
                     onTap: () {
-                      // Add "Continue as Guest" logic here
+                      Navigator.of(context)
+                          .popAndPushNamed(AppRoutes.maindashboard);
                     },
                     child: const Text(
                       'Continue as Guest',

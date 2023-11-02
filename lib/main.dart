@@ -1,8 +1,10 @@
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_susha/firebase_susha.dart';
 import 'package:flutter/material.dart';
+
 import 'package:fypscreensdemo/views/app_views/dashboard.dart';
 import 'package:fypscreensdemo/views/app_views/feedback.dart';
+import 'package:fypscreensdemo/views/app_views/imagedetection.dart';
 
 import 'package:fypscreensdemo/views/app_views/profiledemo.dart';
 import 'package:fypscreensdemo/views/app_views/profilesavedemo.dart';
@@ -38,28 +40,31 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         AppRoutes.splash: (context) => const SplashPage(),
-        AppRoutes.login: (context) => const LoginPage(),
         AppRoutes.register: (context) => const RegistrationPage(),
         AppRoutes.verifyEmail: (context) => const VerifyEmailPage(),
         AppRoutes.report: (context) => const ReportPage(),
         AppRoutes.reportmap: (context) => const MapPage(),
         AppRoutes.feedback: (context) => const FeedbackPage(),
+        AppRoutes.login: (context) => const LoginPage(),
         AppRoutes.profilemake: (context) => const ProfilePage(
               address: '',
               firstName: '',
               lastName: '',
               phoneNumber: '',
+              profileImage: null,
             ),
         AppRoutes.profileview: (context) => const ProfileDisplayPage(
               address: '',
               firstName: '',
               lastName: '',
               phoneNumber: '',
+              profileImage: null,
             ),
         AppRoutes.maindashboard: (context) => const MainPage(),
         AppRoutes.tracking: (context) => const TrackingScreen(),
+        AppRoutes.imagedetect: (context) => const ImageProcessingWidget(),
       },
-      home: const MainPage(),
+      home: const SplashPage(),
     );
   }
 }

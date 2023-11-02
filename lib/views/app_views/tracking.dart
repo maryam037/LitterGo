@@ -12,13 +12,11 @@ class TrackingScreen extends StatefulWidget {
 
 class _TrackingScreenState extends State<TrackingScreen> {
   GoogleMapController? _controller;
-  final LatLng _reportedSite = const LatLng(33.47708099258762,
-      73.19609345257265); // Replace with the reported site coordinates
-  final LatLng _disposalSite = const LatLng(
-      33.6844, 73.0479); // Replace with the disposal site coordinates
+  LatLng _reportedSite = const LatLng(33.531160350847834, 73.16553653723061);
+  LatLng _disposalSite = const LatLng(33.641555140798964, 73.07832079485038);
   LatLng? _userLocation;
 
-  final Set<Marker> _markers = <Marker>{}; // Use Set<Marker> for markers
+  Set<Marker> _markers = <Marker>{};
 
   @override
   void initState() {
@@ -26,7 +24,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
     _getUserLocation();
   }
 
-  // Function to get the user's current location and add markers
   void _getUserLocation() async {
     try {
       Position position = await Geolocator.getCurrentPosition(
@@ -35,7 +32,8 @@ class _TrackingScreenState extends State<TrackingScreen> {
       setState(() {
         _userLocation = LatLng(position.latitude, position.longitude);
 
-        // Add user location marker
+        _markers = <Marker>{};
+
         _markers.add(
           Marker(
             markerId: const MarkerId('Cleaning Truck Location'),
@@ -44,7 +42,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
           ),
         );
 
-        // Add reported site marker
         _markers.add(
           Marker(
             markerId: const MarkerId('Reported Site'),
@@ -53,7 +50,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
           ),
         );
 
-        // Add disposal site marker
         _markers.add(
           Marker(
             markerId: const MarkerId('Disposal Site'),
@@ -67,7 +63,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
     }
   }
 
-  // Function to move the camera to a specific location
   void _moveCamera(LatLng target) {
     if (_controller != null) {
       _controller!.animateCamera(CameraUpdate.newLatLng(target));
@@ -84,7 +79,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).popAndPushNamed(AppRoutes.reportmap);
+            Navigator.of(context).popAndPushNamed(AppRoutes.imagedetect);
           },
         ),
       ),
@@ -130,139 +125,172 @@ class _TrackingScreenState extends State<TrackingScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      _moveCamera(_reportedSite);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff1473b9),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+              GestureDetector(
+                onTap: () {
+                  _moveCamera(_reportedSite);
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    color: const Color(0xff1473b9),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x3f000000),
+                        offset: Offset(0, 4.0),
+                        blurRadius: 2,
                       ),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'View Reported Site',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                              height: 1.2,
-                              color: Color(0xffffffff),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    ],
                   ),
-                  const SizedBox(
-                      height: 10), // Add some spacing between buttons
-                  ElevatedButton(
-                    onPressed: () {
-                      _moveCamera(_disposalSite);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff1473b9),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'View reported site',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                          height: 1.2,
+                          color: Color(0xffffffff),
+                        ),
                       ),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'View Disposal Site',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                              height: 1.2,
-                              color: Color(0xffffffff),
-                            ),
-                          ),
-                        ],
+                      SizedBox(width: 10),
+                      Icon(
+                        Icons.arrow_forward,
+                        size: 24,
+                        color: Color(0xffffffff),
                       ),
-                    ),
+                    ],
                   ),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_userLocation != null) {
-                        _moveCamera(_userLocation!);
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff1473b9),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                ),
+              ),
+
+              const SizedBox(height: 10), // Add some spacing between buttons
+              GestureDetector(
+                onTap: () {
+                  _moveCamera(_disposalSite);
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    color: const Color(0xff1473b9),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x3f000000),
+                        offset: Offset(0, 4.0),
+                        blurRadius: 2,
                       ),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'View Cleaning Truck',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                              height: 1.2,
-                              color: Color(0xffffffff),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    ],
                   ),
-                  const SizedBox(height: 10),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(AppRoutes.feedback);
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      decoration: BoxDecoration(
-                        color: const Color(0xff1473b9),
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x3f000000),
-                            offset: Offset(0, 4.0),
-                            blurRadius: 2,
-                          ),
-                        ],
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'View disposal site',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                          height: 1.2,
+                          color: Color(0xffffffff),
+                        ),
                       ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Feedback',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                              height: 1.2,
-                              color: Color(0xffffffff),
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Icon(
-                            Icons.arrow_forward,
-                            size: 24,
-                            color: Color(0xffffffff),
-                          ),
-                        ],
+                      SizedBox(width: 10),
+                      Icon(
+                        Icons.arrow_forward,
+                        size: 24,
+                        color: Color(0xffffffff),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
+              ),
+
+              const SizedBox(height: 10),
+              GestureDetector(
+                onTap: () {
+                  if (_userLocation != null) {
+                    _moveCamera(_userLocation!);
+                  }
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    color: const Color(0xff1473b9),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x3f000000),
+                        offset: Offset(0, 4.0),
+                        blurRadius: 2,
+                      ),
+                    ],
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'View Cleaning Truck',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                          height: 1.2,
+                          color: Color(0xffffffff),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Icon(
+                        Icons.arrow_forward,
+                        size: 24,
+                        color: Color(0xffffffff),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(AppRoutes.feedback);
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    color: const Color(0xff1473b9),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x3f000000),
+                        offset: Offset(0, 4.0),
+                        blurRadius: 2,
+                      ),
+                    ],
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Feedback',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                          height: 1.2,
+                          color: Color(0xffffffff),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Icon(
+                        Icons.arrow_forward,
+                        size: 24,
+                        color: Color(0xffffffff),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

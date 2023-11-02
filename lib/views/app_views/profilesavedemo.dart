@@ -1,8 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:fypscreensdemo/constants/routes.dart';
-import 'package:fypscreensdemo/views/app_views/profiledemo.dart';
+
+import '../../constants/routes.dart';
 
 class ProfileDisplayPage extends StatelessWidget {
   final String firstName;
@@ -12,7 +11,6 @@ class ProfileDisplayPage extends StatelessWidget {
   final File? profileImage;
 
   const ProfileDisplayPage({
-    super.key,
     required this.firstName,
     required this.lastName,
     required this.address,
@@ -22,9 +20,6 @@ class ProfileDisplayPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double fem = 1.0;
-    const double ffem = 1.0;
-
     return Scaffold(
       backgroundColor: const Color(0xffe8eff1),
       appBar: AppBar(
@@ -38,237 +33,170 @@ class ProfileDisplayPage extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20 * fem),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              'View User Profile!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 28 * ffem,
-                fontWeight: FontWeight.w600,
-                height: 1.2,
-                color: Color(0xff1473b9),
+            Container(
+              color: Colors.blue.shade700,
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  if (profileImage != null)
+                    CircleAvatar(
+                      radius: 70,
+                      backgroundColor: Colors.white,
+                      backgroundImage: FileImage(profileImage!),
+                    ),
+                  const SizedBox(height: 20),
+                  Text(
+                    '$firstName $lastName',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Nunito',
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 20 * fem),
-            profileImage != null
-                ? ClipOval(
-                    child: Image.file(
-                      profileImage!,
-                      width: 175,
-                      height: 175,
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                : const Icon(
-                    Icons.person,
-                    size: 150,
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Card(
+                elevation: 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildInfoRow('Address:', address),
+                      _buildInfoRow('Phone Number:', phoneNumber),
+                    ],
                   ),
-            const SizedBox(height: 40 * fem), // Removed the stray comma here
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    const SizedBox(width: 20 * fem),
-                    Image.asset(
-                      'assets/user.png',
-                      width: 30 * fem,
-                      height: 20 * fem,
-                    ),
-                    const SizedBox(width: 20 * fem),
-                    Text(
-                      firstName,
-                      style: const TextStyle(
-                        fontSize: 30 * ffem,
-                        fontWeight: FontWeight.w600,
-                        height: 1.5,
-                        color: Color(0xff4daddf),
-                      ),
-                    ),
-                  ],
                 ),
-                const SizedBox(height: 20 * fem),
-                Row(
-                  children: [
-                    const SizedBox(width: 20 * fem),
-                    Image.asset(
-                      'assets/user.png',
-                      width: 30 * fem,
-                      height: 20 * fem,
-                    ),
-                    const SizedBox(width: 20 * fem),
-                    Text(
-                      lastName,
-                      style: const TextStyle(
-                        fontSize: 30 * ffem,
-                        fontWeight: FontWeight.w600,
-                        height: 1.5,
-                        color: Color(0xff4daddf),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20 * fem),
-                Row(
-                  children: [
-                    const SizedBox(width: 20 * fem),
-                    Image.asset(
-                      'assets/datetime.png',
-                      width: 30 * fem,
-                      height: 20 * fem,
-                    ),
-                    const SizedBox(width: 20 * fem),
-                    Text(
-                      address,
-                      style: const TextStyle(
-                        fontSize: 30 * ffem,
-                        fontWeight: FontWeight.w600,
-                        height: 1.5,
-                        color: Color(0xff4daddf),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20 * fem),
-                Row(
-                  children: [
-                    const SizedBox(width: 20 * fem),
-                    Image.asset(
-                      'assets/phone.png',
-                      width: 30 * fem,
-                      height: 20 * fem,
-                    ),
-                    const SizedBox(width: 20 * fem),
-                    Text(
-                      phoneNumber,
-                      style: const TextStyle(
-                        fontSize: 30 * ffem,
-                        fontWeight: FontWeight.w600,
-                        height: 1.5,
-                        color: Color(0xff4daddf),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
-            const SizedBox(height: 40 * fem),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => ProfilePage(
-                      firstName: firstName,
-                      lastName: lastName,
-                      address: address,
-                      phoneNumber: phoneNumber,
-                      profileImage: profileImage,
-                    ),
-                  ),
-                );
-              },
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 10 * fem),
-                decoration: BoxDecoration(
-                  color: const Color(0xff4daddf),
-                  borderRadius: BorderRadius.circular(20 * fem),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x3f000000),
-                      offset: Offset(0, 4 * fem),
-                      blurRadius: 2 * fem,
-                    ),
-                  ],
+            SizedBox(
+              width: double.infinity,
+              child: Card(
+                margin: const EdgeInsets.all(20),
+                elevation: 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      child: const Text(
-                        'Edit Profile Info',
-                        style: TextStyle(
-                          fontSize: 20 * ffem,
-                          fontWeight: FontWeight.w400,
-                          height: 1.2,
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildSectionTitle('Your reports in progress:'),
+                      _buildSectionText('0'),
+                      const SizedBox(height: 15),
+                      _buildSectionTitle('Your reports completed:'),
+                      _buildSectionText('1'),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Center(
+              child: SizedBox(
+                width: 250, // Set your preferred width here
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(AppRoutes.maindashboard);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      color: const Color(0xff1473b9),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x3f000000),
+                          offset: Offset(0, 4.0),
+                          blurRadius: 2,
+                        ),
+                      ],
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Save and continue',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
+                            height: 1.2,
+                            color: Color(0xffffffff),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Icon(
+                          Icons.arrow_forward,
+                          size: 24,
                           color: Color(0xffffffff),
                         ),
-                      ),
-                    ),
-                    const SizedBox(width: 10 * fem),
-                    Image.asset(
-                      'assets/rightarrow.png',
-                      width: 6 * fem,
-                      height: 12 * fem,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 20 * fem),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed(AppRoutes.maindashboard);
-              },
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 10 * fem),
-                decoration: BoxDecoration(
-                  color: const Color(0xff4daddf),
-                  borderRadius: BorderRadius.circular(20 * fem),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x3f000000),
-                      offset: Offset(0, 4 * fem),
-                      blurRadius: 2 * fem,
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      child: const Text(
-                        'Continue',
-                        style: TextStyle(
-                          fontSize: 20 * ffem,
-                          fontWeight: FontWeight.w400,
-                          height: 1.2,
-                          color: Color(0xffffffff),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10 * fem),
-                    Image.asset(
-                      'assets/rightarrow.png',
-                      width: 6 * fem,
-                      height: 12 * fem,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            /*ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => ProfilePage(
-                      fullName: fullName,
-                      address: address,
-                      phoneNumber: phoneNumber,
-                      profileImage: profileImage,
+                      ],
                     ),
                   ),
-                );
-              },
-              child: const Text('Edit Profile'),
-            ),*/
+                ),
+              ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              color: Colors.blue.shade700,
+              fontSize: 20,
+              height: 1.5,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            value,
+            style: const TextStyle(
+              color: Color(0xff4daddf),
+              fontSize: 18,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Text(
+      title,
+      style: TextStyle(
+        color: Colors.blue.shade700,
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _buildSectionText(String text) {
+    return Text(
+      text,
+      style: const TextStyle(
+        color: Color(0xff4daddf),
+        fontSize: 18,
       ),
     );
   }

@@ -83,6 +83,18 @@ flutter:
   - assets\garbagedemo.png
   - assets\phone.png
   - assets\icon.png
+  - assets\s1.jpg  
+  - assets\s2.jpg    
+  - assets\s3.jpg   
+  - assets\s4.jpg   
+  - assets\s5.jpg   
+  - assets\s6.jpg   
+  - assets\s7.jpg    
+  - assets\s8.jpg  
+  - assets\s9.jpg   
+  - assets\s10.jpg    
+
+   
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
