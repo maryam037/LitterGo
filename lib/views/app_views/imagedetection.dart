@@ -17,19 +17,17 @@ class _ImageProcessingWidgetState extends State<ImageProcessingWidget> {
   File? _selectedImage;
   String response = '';
   bool _isImageSelected = false;
+  double? confidence;
 
-  void showDetectionPopup(String responseText) {
-    double confidence = _extractConfidence(responseText);
-    String popupMessage =
-        confidence > 0.3 ? 'Litter Dump Detected' : 'Litter Dump Not Detected';
-
-    showDialog(
+  Future<void> showLitterDetectedDialog(BuildContext context) async {
+    return showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Detection Result'),
-          content: Text(popupMessage),
-          actions: <Widget>[
+          title: const Text('Litterdump Detected!'),
+          content: const Text(
+              'A cleaning team will be dispatched to litterdump location'),
+          actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
@@ -42,18 +40,25 @@ class _ImageProcessingWidgetState extends State<ImageProcessingWidget> {
     );
   }
 
-// Function to extract confidence value from response text
-  double _extractConfidence(String responseText) {
-    // Extract the confidence value from the response text
-    double confidence = 0.0;
-
-    // Assuming the response text contains the confidence value in a specific format
-    List<String> parts = responseText.split('confidence:');
-    if (parts.length > 1) {
-      String confidenceString = parts[1].trim().split(' ')[0];
-      confidence = double.tryParse(confidenceString) ?? 0.0;
-    }
-    return confidence;
+  Future<void> showLitterNotDetectedDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Litter Not Detected!'),
+          content:
+              const Text('Please take photo of litterdump from another angle'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> processImage() async {
@@ -87,6 +92,11 @@ class _ImageProcessingWidgetState extends State<ImageProcessingWidget> {
         final decodedResponse = utf8.decode(apiResponse.bodyBytes);
         setState(() {
           response = decodedResponse;
+          var temp = jsonDecode(apiResponse.body) as Map<String, dynamic>;
+          confidence = ((temp['predictions'])[0])[
+              'confidence']; // Assign confidence value
+
+          print(confidence);
         });
       } else {
         print('API request failed: ${apiResponse.reasonPhrase}');
@@ -126,142 +136,151 @@ class _ImageProcessingWidgetState extends State<ImageProcessingWidget> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'LITTER DETECTION',
-                style: TextStyle(
-                  fontSize: 28,
-                  color: Color(0xff1473b9),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Upload image of spotted litter dump for detection.',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Color(0xff1473b9),
-                ),
-              ),
-              const SizedBox(height: 20),
-              GestureDetector(
-                onTap: _selectImage,
-                child: Center(
-                  child: _isImageSelected
-                      ? ClipRRect(
-                          child: Image.file(
-                            _selectedImage!,
-                            width: 400,
-                            height: 300,
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      : const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+          child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'LITTER DETECTION',
+                      style: TextStyle(
+                        fontSize: 28,
+                        color: Color(0xff1473b9),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Upload image of spotted litter dump for detection.',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Color(0xff1473b9),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    GestureDetector(
+                      onTap: _selectImage,
+                      child: Center(
+                        child: _isImageSelected
+                            ? ClipRRect(
+                                child: Image.file(
+                                  _selectedImage!,
+                                  width: 400,
+                                  height: 300,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.add_a_photo,
+                                    size: 50.0,
+                                    color: Color(0xff1473b9),
+                                  ),
+                                  Text(
+                                    'Upload Photo',
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.2,
+                                      color: Color(0xff1473b9),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    if (_isImageSelected) // Show response only if the image is selected
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.add_a_photo,
-                              size: 50.0,
-                              color: Color(0xff1473b9),
-                            ),
-                            Text(
-                              'Upload Photo',
+                            const Text(
+                              'Server Response:',
                               style: TextStyle(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w400,
-                                height: 1.2,
+                                fontSize: 28,
+                                color: Color(0xff1473b9),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              response,
+                              style: const TextStyle(
+                                fontSize: 20,
                                 color: Color(0xff1473b9),
                               ),
                             ),
                           ],
                         ),
-                ),
-              ),
-              const SizedBox(height: 5),
-              if (_isImageSelected) // Show response only if the image is selected
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Server Response:',
-                        style: TextStyle(
-                          fontSize: 28,
-                          color: Color(0xff1473b9),
-                          fontWeight: FontWeight.w600,
+                      ),
+                    GestureDetector(
+                      onTap: () {
+                        if (!_isImageSelected) {
+                          showErrorSnackbar(
+                              context, 'Please upload a photo first.');
+                        } else if (response.isEmpty) {
+                          showErrorSnackbar(
+                              context, 'Waiting for server response...');
+                        } else {
+                          if (confidence != null && confidence! > 0.4) {
+                            showLitterDetectedDialog(context).then((_) {
+                              
+                              Navigator.of(context)
+                                  .pushNamed(AppRoutes.tracking);
+                            });
+                          } else {
+                            showLitterNotDetectedDialog(context).then((_) {
+                           
+                              Navigator.of(context)
+                                  .pushNamed(AppRoutes.imagedetect);
+                            });
+                          }
+                        }
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                          color: _isImageSelected && response.isNotEmpty
+                              ? const Color(0xff1473b9)
+                              : const Color(0xff999999),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0x3f000000),
+                              offset: Offset(0, 4.0),
+                              blurRadius: 2,
+                            ),
+                          ],
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Submit',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                                height: 1.2,
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Icon(
+                              Icons.arrow_forward,
+                              size: 24,
+                              color: Colors.white,
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 5),
-                      Text(
-                        response,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Color(0xff1473b9),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              GestureDetector(
-                onTap: () {
-                  if (!_isImageSelected) {
-                    showErrorSnackbar(context, 'Please upload a photo first.');
-                  } else if (response.isEmpty) {
-                    showErrorSnackbar(
-                        context, 'Waiting for server response...');
-                  } else {
-                    showDetectionPopup(response);
-                    Navigator.of(context).pushNamed(AppRoutes.tracking);
-                  }
-                },
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                    color: _isImageSelected && response.isNotEmpty
-                        ? const Color(0xff1473b9)
-                        : const Color(0xff999999),
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x3f000000),
-                        offset: Offset(0, 4.0),
-                        blurRadius: 2,
-                      ),
-                    ],
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Submit',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                          height: 1.2,
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Icon(
-                        Icons.arrow_forward,
-                        size: 24,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+                    ),
+                  ]))),
     );
   }
 }

@@ -1,0 +1,30 @@
+"use strict";
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.parseKeywords = void 0;
+var removeDiacritics_1 = require("./removeDiacritics");
+function parseKeywords(input) {
+    if (typeof input === 'string') {
+        return removeDiacritics_1.removeDiacritics(input)
+            .toLowerCase()
+            .split(/[^a-z0-9]+/gs)
+            .filter(function (value) { return value; });
+    }
+    else if (typeof input === 'object') {
+        if (Array.isArray(input)) {
+            return input.map(parseKeywords).reduce(function (a, b) { return __spreadArray(__spreadArray([], a), b); }, []);
+        }
+        else {
+            return parseKeywords(Object.values(input));
+        }
+    }
+    else {
+        return [];
+    }
+}
+exports.parseKeywords = parseKeywords;
+//# sourceMappingURL=parseKeywords.js.map

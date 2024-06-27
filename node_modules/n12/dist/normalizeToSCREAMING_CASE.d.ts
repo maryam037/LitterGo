@@ -1,0 +1,1 @@
+export declare function normalizeToSCREAMING_CASE(name: string): string;

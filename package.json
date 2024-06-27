@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "@wdio/browserstack-service": "^8.27.0"
+  }
+}

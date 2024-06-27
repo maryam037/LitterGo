@@ -1,0 +1,1 @@
+{"version":3,"file":"capitalizeFirstLetter.js","sourceRoot":"","sources":["../src/capitalizeFirstLetter.ts"],"names":[],"mappings":";;;AACA,SAAgB,qBAAqB,CAAC,IAAY;IAC9C,OAAO,IAAI,CAAC,MAAM,CAAC,CAAC,EAAE,CAAC,CAAC,CAAC,WAAW,EAAE,GAAG,IAAI,CAAC,MAAM,CAAC,CAAC,CAAC,CAAC,WAAW,EAAE,CAAC;AAC1E,CAAC;AAFD,sDAEC"}

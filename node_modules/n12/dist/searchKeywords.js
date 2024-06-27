@@ -1,0 +1,24 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.searchKeywords = void 0;
+/**
+ *
+ */
+function searchKeywords(haystack, needle) {
+    var _loop_1 = function (needleWord) {
+        if (!haystack.some(function (haystackWord) {
+            return haystackWord.substring(0, needleWord.length) === needleWord;
+        })) {
+            return { value: false };
+        }
+    };
+    for (var _i = 0, needle_1 = needle; _i < needle_1.length; _i++) {
+        var needleWord = needle_1[_i];
+        var state_1 = _loop_1(needleWord);
+        if (typeof state_1 === "object")
+            return state_1.value;
+    }
+    return true;
+}
+exports.searchKeywords = searchKeywords;
+//# sourceMappingURL=searchKeywords.js.map

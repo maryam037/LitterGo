@@ -1,0 +1,5 @@
+import type { RectReturn } from '@wdio/protocols';
+export type Size = Pick<RectReturn, 'width' | 'height'>;
+export declare function getSize(this: WebdriverIO.Element): Promise<Size>;
+export declare function getSize(this: WebdriverIO.Element, prop: keyof RectReturn): Promise<number>;
+//# sourceMappingURL=getSize.d.ts.map

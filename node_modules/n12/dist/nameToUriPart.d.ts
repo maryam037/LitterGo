@@ -1,0 +1,4 @@
+/**
+ *
+ */
+export declare function nameToUriPart(name: string): string;

@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.tracking: (context) => const TrackingScreen(),
         AppRoutes.imagedetect: (context) => const ImageProcessingWidget(),
       },
-      home: const SplashPage(),
+      home: const ImageProcessingWidget(),
     );
   }
 }

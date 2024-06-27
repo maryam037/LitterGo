@@ -1,0 +1,2 @@
+import { IKeywords } from './IKeywords';
+export declare function parseKeywords(input: any): IKeywords;

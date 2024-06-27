@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.nameToUriPart = void 0;
+var removeDiacritics_1 = require("./removeDiacritics");
+/**
+ *
+ */
+function nameToUriPart(name) {
+    var uri = name;
+    uri = removeDiacritics_1.removeDiacritics(uri);
+    uri = uri.replace(/[^a-zA-Z0-9]+/g, '-');
+    uri = uri.replace(/^-+/, '');
+    uri = uri.replace(/-+$/, '');
+    return uri;
+}
+exports.nameToUriPart = nameToUriPart;
+//# sourceMappingURL=nameToUriPart.js.map

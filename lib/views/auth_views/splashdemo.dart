@@ -21,8 +21,7 @@ class SplashPage extends StatelessWidget {
 
           // Content
           Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: 8 * fem), // Adjust the value as needed
+            padding: EdgeInsets.symmetric(horizontal: 8 * fem),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,

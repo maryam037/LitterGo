@@ -1,0 +1,35 @@
+# Installation
+> `npm install --save @types/gitconfiglocal`
+
+# Summary
+This package contains type definitions for gitconfiglocal (https://github.com/soldair/node-gitconfiglocal#readme).
+
+# Details
+Files were exported from https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/gitconfiglocal.
+## [index.d.ts](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/gitconfiglocal/index.d.ts)
+````ts
+declare namespace gitconfig {
+    interface GitConfig {
+        [key: string]: any;
+    }
+
+    type callback = (error: Error | false, config: GitConfig) => void;
+
+    interface Options {
+        gitDir?: string | undefined;
+    }
+}
+
+declare function gitconfig(dir: string, options: gitconfig.Options, cb: gitconfig.callback): void;
+declare function gitconfig(dir: string, cb: gitconfig.callback): void;
+
+export = gitconfig;
+
+````
+
+### Additional Details
+ * Last updated: Tue, 07 Nov 2023 03:09:37 GMT
+ * Dependencies: none
+
+# Credits
+These definitions were written by [Florian Keller](https://github.com/ffflorian).

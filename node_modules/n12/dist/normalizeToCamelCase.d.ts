@@ -1,0 +1,1 @@
+export declare function normalizeToCamelCase(name: string, firstLetterCapital?: boolean): string;

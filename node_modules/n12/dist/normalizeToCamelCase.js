@@ -1,0 +1,45 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.normalizeToCamelCase = void 0;
+function normalizeToCamelCase(name /* TODO: maybe semantic helper */, 
+// TODO: Options
+firstLetterCapital) {
+    if (firstLetterCapital === void 0) { firstLetterCapital = false; }
+    var charType;
+    var lastCharType = null;
+    var normalizedName = '';
+    for (var _i = 0, name_1 = name; _i < name_1.length; _i++) {
+        var char = name_1[_i];
+        var normalizedChar = void 0;
+        if (/^[a-z]$/.test(char)) {
+            charType = 'LOWERCASE';
+            normalizedChar = char;
+        }
+        else if (/^[A-Z]$/.test(char)) {
+            charType = 'UPPERCASE';
+            normalizedChar = char.toLowerCase();
+        }
+        else if (/^[0-9]$/.test(char)) {
+            charType = 'NUMBER';
+            normalizedChar = char;
+        }
+        else {
+            charType = 'OTHER';
+            normalizedChar = '';
+        }
+        if (!lastCharType) {
+            if (firstLetterCapital) {
+                normalizedChar = normalizedChar.toUpperCase(); //TODO: DRY
+            }
+        }
+        else if (charType !== lastCharType &&
+            !(charType === 'LOWERCASE' && lastCharType === 'UPPERCASE')) {
+            normalizedChar = normalizedChar.toUpperCase(); //TODO: DRY
+        }
+        normalizedName += normalizedChar;
+        lastCharType = charType;
+    }
+    return normalizedName;
+}
+exports.normalizeToCamelCase = normalizeToCamelCase;
+//# sourceMappingURL=normalizeToCamelCase.js.map

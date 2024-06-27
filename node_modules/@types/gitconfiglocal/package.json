@@ -1,0 +1,25 @@
+{
+    "name": "@types/gitconfiglocal",
+    "version": "2.0.3",
+    "description": "TypeScript definitions for gitconfiglocal",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/gitconfiglocal",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Florian Keller",
+            "githubUsername": "ffflorian",
+            "url": "https://github.com/ffflorian"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/gitconfiglocal"
+    },
+    "scripts": {},
+    "dependencies": {},
+    "typesPublisherContentHash": "9c0ef52ce33e6394670c3b261a2cdce55036dc1a43ca64d974884c71977b7b37",
+    "typeScriptVersion": "4.5"
+}
